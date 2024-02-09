@@ -1,0 +1,303 @@
+= Übung "Meal Voucher"
+// Metadata
+Thomas W. Stütz
+1.0.0, 2024-02-01: 4chif - WMC - Test02
+ifndef::imagesdir[:imagesdir: images]
+//:toc-placement!:  // prevents the generation of the doc at this position, so it can be printed afterwards
+:sourcedir: ../src/main/java
+:icons: font
+:sectnums:    // Nummerierung der Überschriften / section numbering
+:toclevels: 4
+:toc: left
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+[discrete]
+== Lernziele
+
+* Customizen der Table über Annotationen (Constraints)
+
+[discrete]
+== Hilfsmittel
+
+[discrete]
+=== Erlaubte Hilfmittel
+
+//* Stackoverflow
+//* Dokumentationen von Libraries, Frameworks usw.
+//** zB https://www.objectdb.com/java/jpa/query/api
+* handgeschriebener cheat-sheet (max. 1 Seite A4)
+//* im beiligenden README.md finden Sie noch Tips zur Konfiguration
+* die zur Verfügung stehenden Unit-Tests
+//* Die scripts auf http://edufs.edu.htl-leonding.ac.at/~t.stuetz/download/nvs/scripts/
+
+[discrete]
+=== Nicht erlaubte Hilfsmittel
+
+* die Hilfe anderer Personen
+* fertige Projekte (auf git-hostern oder auch lokal)
+** nicht erlaubt sind also github, bitbucket, gitlab usw.
+* Lange (vollständige) Programmcodes (egal von welcher Quelle)
+* das "Internet"
+
+== Ausgangssituation
+
+* An der HTL Leonding gibt es jährlich einen Tag der offenen Türe.
+** An diesem Tag gibt es auch ein Buffet, an dem Speisen und Getränke erworben werden können.
+** Schüler die auf den einezlen Stationen des Tags der offenen türe arbeiten bekommen für jeden Tag einen Essensgutschein. Diese Gutscheine sollen fälschungssicher sein, dh bei zwei Gutscheinen mit gleicher ID, ist nur der erste Gutschein gültig.
+** Ihre Aufgabe ist es nun eine konfigurierbare Anzahl von Essensgutscheinen zu generieren mit einer eindeutigen ID (gUID).
+** Anschließend wird für jede dieser Nummern ein QR-Code generiert.
+** Wird nun ein URL mit dem QR-Code aufgerufen, wird der Gutschein automatisch entwertet.
+
+== Aufgabenüberblick
+
+* Clonen Sie zuerst das Quarkus-Backend.
+//* Kopieren Sie die beigefügten Testklassen in das Projekt
+* Erstellen Sie die Entitätsklassen
+* Wenn alle *entity*-Tests funktionieren bereiten Sie die Entity-Klassen zur Persistierung vor
+** Die Queries - falls diese gebraucht werden - sind typisiert durchzuführen.
+** Für die Repositories verwenden Sie Panáche mit dem Repository Ansatz.
+* Schlußendlich implementieren Sie den Endpoint.
+* Die jUnit-Tests sind Teil der Angabe
+
+IMPORTANT: Nach jeder (zu programmierenden) Aufgabe führen Sie ein Commit durch.
+
+=== Lesen Sie die gesamte Angabe aufmerksam durch
+
+* Falls Ihnen etwas unklar ist, fragen Sie ...
+
+
+
+
+=== Initialisieren der Datenbank
+
+==== Download der derbydb
+
+////
+Verwenden Sie diesen http://edufs.edu.htl-leonding.ac.at/~t.stuetz/download/nvs/scripts/download-derbydb-and-jdk.sh[Link], um das Script `download-derbydb-and-jdk.sh` downzuladen. Beim Ausführen werden alle notwendigen Dateien in das aktuelle Verzeichnis geladen:
+
+----
+chmod +x ./download-derbydb-and-jdk.sh
+./download-derbydb-and-jdk.sh java
+----
+////
+
+.Starten Sie folgende Scripts
+|===
+|Script |starten mit
+
+|`create-db.sh`
+|`./create-db.sh`
+
+|`start-derby.sh`
+|`./start-derby.sh`
+
+|===
+
+.Ergebnis, nach Durchführen der Scripts
+image::db-folder.png[]
+
+
+=== Konfiguration des Projekts
+
+Das Projekt wird über eine `.env`-Datei konfiguriert.
+
+[source,properties]
+----
+SERVER_URL=http://localhost:8080/api/qrcodes
+QRCODE_RESOURCES_PATH=src/main/resources/META-INF/resources
+QRCODE_WEB_PATH=qrcodes
+MAX_VOUCHERS_TO_CREATE=100
+----
+
+[%autowidth]
+|===
+
+|Property | Beschreibung
+
+|SERVER_URL
+|Pfad der gemeinsam mit der Id des jeweiligen Vouchers im QR-Code codiert wird.
+
+|QRCODE_RESOURCES_PATH
+|Verzeichnis in dem die Qr-Code-Grafikdateien (qrCodeImage) gespeichert werden. Die Dateinamen bestehen aus der id des vouchers mit der Dateiwerweiterung `.png`
+
+|QRCODE_WEB_PATH
+|Pfad für die Website, mit der auf die QR-Code-Grafikdateien zugegriffen werden kann
+
+|MAX_VOUCHERS_TO_CREATE
+|Anzahl der Vouchers, die erstellt werden dürfen. Es hat keinen 100.000 Vouchers zu erstellen. Daher wird die Anzahl der max. zu erstellenden Vouchers auf 100 festgelegt
+
+|===
+
+
+=== Aufgabe 4: Erstellen Sie die Entitätsklasse und das Datentransferobjekt
+
+* Vervollständigen Sie zunächst die Entitätsklasse
+
+.Class Diagram
+ifdef::env-github[]
+image::voucher-cld.svg[]
+endif::[]
+
+ifndef::env-github[]
+[plantuml,voucher-cld,png]
+----
+@startuml
+include::plantuml/voucher-cld.puml[]
+@enduml
+----
+endif::[]
+
+
+WARNING: Beachten Sie die zur Verfügung stehenden Tests, die ebenfalls Teil der Angabe sind.
+
+.ERD
+image::erd-voucher.png[]
+
+
+
+
+==== Voucher
+
+* Verwenden sie ein transientes, package-scoped Attribut `String serverUrl`, welchem aus der `.env`-Datei den Key `SERVER_URL` zugewiesen wird (nicht im Klassendiagramm enthalten).
+
+[%autowidth]
+|===
+
+|Attribut | Spaltenname | Datentyp |Beschreibung
+
+|id
+|V_ID
+|UUID
+|(Universally Unique Identifier), ist Primary Key der Tabelle, wird von der Datenbank generiert.
+
+|createDatetime
+|V_CREATE_DATE_TIME
+|LocalDateTime
+|Wird automatisch vergeben. So ist einfach festzustellen, wann der Voucher erstellt wurde.
+
+|isValid
+|V_IS_VALID
+|boolean
+|Ob ein Voucher gültig ist (true) oder bereits entwertet wurde (false). Nach dem Erstellen ist der Voucher gültig.
+
+|cancelDateTime
+|V_CANCEL_DATE_TIME
+|LocalDateTime
+|Wird ein Voucher entwertet, wird hier der Zeitpunkt der Entwertung automatisch eingetragen.
+
+|valueEuro
+|V_VALUE_EURO
+|int
+|Der Wert des Vouchers. Wird im Konstruktor kein Wert mitgegeben, so sind 3 EURO der Standardwert
+
+|qrCodeImage
+|V_QRCODE_IMAGE
+|byte[]
+|Ist ein Binary *Large Object*, dh die QR-Code-Grafikdatei wird hier binär in Form eines byte-Arrays gespeichert.
+
+
+|qrCodeImagePath
+|V_QRCODE_IMAGE_PATH
+|String
+|Ist der Pfad für die Webanwendung, um das QR-Code-Image downloaden zu können. Besteht aus dem Eintrag `QRCODE_WEB_PATH` in der .env-Datei mit dem Namen der Bilddatei zB `qrcodes/224a6485-98de-4103-8c9d-1cb80ea04ac7.png`
+
+|===
+
+
+
+
+
+
+
+
+
+==== VoucherDto
+
+ifdef::env-github[]
+image::cld.svg[]
+endif::[]
+
+ifndef::env-github[]
+[plantuml,voucherdto-cld,png]
+----
+@startuml
+include::plantuml/voucherdto-cld.puml[]
+@enduml
+----
+endif::[]
+
+
+
+
+=== Erstellen der Repositories
+
+* Sämtliche Zugriffe auf die Datenbank erfolgen über die Repositories.
+* Achten Sie darauf, dass Entity-Objekte ohne PK als neuer Datensatz angelegt werden, mit vorhandenem PK jedoch nur ein update durchgeführt wird.
+* Verwenden Sie die Klasse `InitBean.java`, um die DB mit 10 Vouchers zu initialisieren
+// * Löschen Sie die nicht benötigten (von Quarkus erstellten) Tests und Klassen
+* Verwenden Sie die beigelegten Repository-Tests, um sicherzustellen, dass Ihre Implementierung funktioniert
+
+.Die im META-INF/resources - Verzeichnis liegenden png-Files können im Browser betrachtet werden.
+image::qrcode-im-browser.png[]
+
+=== Erstellen des Endpoints
+
+* Erstellen Sie eine Klasse `VoucherResource`
+* Verwenden Sie hierzu den Requests in `http-requests/requests.http` sowie die Systemtests in `VoucherResourceTest`
+
+[%autowidth]
+|===
+|Methode |Pfad |Beschreibung
+
+|GET
+|`/api/voucher/{id}`
+|siehe Abb.5: Ein Voucher (Gutschein) wird ausgegeben.
+
+|GET
+|`/api/voucher`
+|siehe Abb.6: Alle Vouchers werden ausgegeben.
+
+|GET
+|`/api/voucher/{id}?cancel=true`
+|Der Voucher mit der {id} wird entwertet
+
+|POST
+|`/api/voucher?value=4&no=15`
+|Es werden 15 Vouchers mit je 4 Euro Guthaben erstellt und in der Datenbank gespeichert. Rückgabe von zB "15 vouchers created"
+
+|===
+
+
+
+.Unter `http://localhost:8080/api/voucher/{id}` wird ein Voucher ausgegeben
+image::ausgabe-eines-vouchers.png[id=one-voucher]
+
+
+.Unter `http://localhost:8080/api/voucher` werden alle Vouchers ausgegeben
+image::ausgabe-aller-vouchers.png[id=all-vouchers]
+
+=== jUnit-Tests
+
+image::test-results.png[]
+
+
+
+
+
+Nicht vergessen - beim Programmieren kleine Schritte machen (*das Programm soll immer lauffähig sein*)
+
+image:small-steps.jpg[width=300]
+
+----
+ __   ___     _   ___      __     _      _
+ \ \ / (_)___| | | __|_ _ / _|___| |__ _| |
+  \ V /| / -_) | | _|| '_|  _/ _ \ / _` |_|
+   \_/ |_\___|_| |___|_| |_| \___/_\__, (_)
+                                   |___/
+----

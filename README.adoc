@@ -1,0 +1,32 @@
+= Meal Voucher | Sebastian Hager
+
+An application to create, cancel and list QR-CODES.
+
+'''
+
+== Startup
+
+* make sure you have installed
+** docker
+** node.js
+** npm
+** @angular/cli
+
+
+* start backend
+**  move to backend-quarkus folder
+*** run *./postgres-create.sh*
+*** run *./postgres-start.sh*
+*** edit the file *template.env* with your config
+*** run *./mvnw clean quarkus:dev*
+
+* start frontend
+** move to frontend-web
+*** run *npm install*
+*** run *npm start*
+
+
+== Technologies
+
+* Quarkus
+* Angular

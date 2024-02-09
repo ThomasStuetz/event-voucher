@@ -1,0 +1,7 @@
+<button (click)="exportToPdf()">Export to PDF</button>
+<div #pdfContent class="border-2" hidden>
+  <div *ngFor="let qrcode of qrcodes">
+  <img class="image" [src]="'http://localhost:8080/' + qrcode.qrCodeImagePath" alt="qr-code">
+</div>
+</div>
+

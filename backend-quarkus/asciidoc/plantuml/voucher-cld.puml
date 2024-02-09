@@ -1,0 +1,39 @@
+@startuml
+
+'!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class Voucher {
+  - id: UUID <<generated>>
+  - createDateTime: LocalDateTime
+  - isValid: boolean
+  - cancelDateTime: LocalDateTime
+  - valueEuro: int
+  - qrCodeImage: byte[]
+  - qrCodeImagePath: String
+  --
+  + Voucher():
+  + Voucher(int valueEuro):
+  --
+  + getId(): UUID
+  + setId(UUID id): void
+  + getCreateDateTime(): LocalDateTime
+  + setCreateDateTime(LocalDateTime createDatetime): void
+  + isValid(): boolean
+  + setValid(boolean valid): void
+  + getCancelDateTime(): LocalDateTime
+  + setCancelDateTime(LocalDateTime cancelDateTime): void
+  + getValueEuro(): int
+  + setValueEuro(int valueEuro): void
+  + getQrCodeImage(): byte[]
+  + setQrCodeImage(byte[] qrCode): void
+  + getQrCodeImagePath(): String
+  + setQrCodeImagePath(String qrCodeImagePath): void
+  + toString(): String
+  + toDto(): VoucherDto
+  + createQrCode(): byte[]
+  + writeQrCodeToFile(Path path): void
+}
+
+@enduml

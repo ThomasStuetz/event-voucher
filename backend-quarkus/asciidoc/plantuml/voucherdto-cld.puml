@@ -1,0 +1,16 @@
+@startuml
+
+'!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+entity VoucherDto << record >> {
+  - id: UUID
+  - valueEuro: int
+  - createDateTime: LocalDateTime
+  - cancelDateTime: LocalDateTime
+  - valid: boolean
+  - qrCodeImagePath: String
+}
+
+@enduml
