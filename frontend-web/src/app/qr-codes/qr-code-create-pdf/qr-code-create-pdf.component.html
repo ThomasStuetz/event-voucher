@@ -1,7 +1,38 @@
-<button (click)="exportToPdf()">Export to PDF</button>
 <div #pdfContent class="border-2" hidden>
   <div *ngFor="let qrcode of qrcodes">
-  <img class="image" [src]="'http://localhost:8080/' + qrcode.qrCodeImagePath" alt="qr-code">
-</div>
+    <img class="image" [src]="'http://localhost:8080/' + qrcode.qrCodeImagePath" alt="qr-code">
+
+    <h2>{{ qrcode.valueEuro }}</h2>
+  </div>
 </div>
 
+<div class="main">
+  <div class="config">
+    <div>
+      <input type="file" (change)="onFileSelected($event)">
+    </div>
+    <div>
+      <button (click)="exportToPdf()">Export to PDF</button>
+    </div>
+  </div>
+
+  <div class="show-preview">
+    <div>
+      <p *ngIf="!showImage; else imgShown">
+        Logo Ihrer Organisation
+      </p>
+      <ng-template #imgShown>
+        <img id="companyLogo" class="w-50 h-auto">
+      </ng-template>
+
+    </div>
+
+    <div>
+      <img [src]="'http://localhost:8080/' + qrcodes[1].qrCodeImagePath" alt="qr-code">
+    </div>
+    <div>
+      <h2>Wert des Tickets: {{ qrcodes[0].valueEuro }}€</h2>
+
+    </div>
+  </div>
+</div>

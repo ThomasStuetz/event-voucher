@@ -91,4 +91,23 @@ export class QrCodeCreatePdfComponent {
   }
 
 
+  //conifg
+
+
+  showImage = false
+
+  onFileSelected(event: any) {
+    this.showImage = true
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const imgElement = document.getElementById('companyLogo') as HTMLImageElement;
+        if (imgElement) {
+          imgElement.src = e.target?.result as string;
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  }
 }
