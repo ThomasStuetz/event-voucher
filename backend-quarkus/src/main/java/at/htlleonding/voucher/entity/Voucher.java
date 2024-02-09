@@ -50,7 +50,7 @@ public class Voucher {
     @Column(name = "v_value_euro")
     private int valueEuro;
 
-    @Lob
+//    @Lob
     @Column(name = "v_qrcode_image")
     private byte[] qrCodeImage;
 
