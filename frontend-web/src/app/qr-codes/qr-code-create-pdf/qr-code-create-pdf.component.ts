@@ -79,9 +79,10 @@ export class QrCodeCreatePdfComponent {
         // Add image to PDF
         pdf.addImage(imgData, 'PNG', xPos, yPos, imgWidth, imgHeight);
 
+
         // Add text below the QR code
-        const text = 'Event Voucher ' + (i + 1); // Example text
-        pdf.text(text, xPos + imgWidth / 2, yPos + imgHeight + 10, { align: 'center' }); // Adjust position and alignment as needed
+        const valueEuro = `Wert des Tickets: ${this.qrcodes[0].valueEuro}€`
+        pdf.text(valueEuro, xPos + imgWidth / 2, yPos + imgHeight + 10, { align: 'center' }); // Adjust position and alignment as needed
       }
 
 

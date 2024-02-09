@@ -7,16 +7,38 @@
 </div>
 
 <div class="main">
-  <div class="config">
-    <div>
-      <input type="file" (change)="onFileSelected($event)">
+  <div class="config border">
+    <div class="border-bottom">
+      <h1 class="text-center p-3">Ticketgestaltung</h1>
     </div>
-    <div>
-      <button (click)="exportToPdf()">Export to PDF</button>
+    <div class="m-md-3">
+      <p class="text-center">Hier können Sie Ihre Ticket mit den QR-Codes gestalten:</p>
+    </div>
+    <div class="file-chooser w-75 ">
+      <label for="formFile" class="form-label">Wählen Sie das Logo Ihrer Organisation:</label>
+      <input class="form-control" type="file" id="formFile" (change)="onFileSelected($event)">
+    </div>
+    <div class="m-md-3">
+      <p class="text-center">Die QR-Codes werden automatisch erzeugt <br>
+        und auf den Tickets angezeigt.</p>
+    </div>
+    <div class="event-desc input-group w-75">
+      <span class="input-group-text" id="inputGroup-sizing-default">Name des Events</span>
+      <input type="text" class="form-control" aria-label="Sizing example input"
+             aria-describedby="inputGroup-sizing-default">
+    </div>
+    <div class="m-md-3">
+      <p class="text-center">Der Geldwert der Tickets entspricht dem Betrag,<br>
+        den Sie bei der Erstellung angegeben haben,<br>
+        und wird automatisch angezeigt. <br>
+        </p>
+    </div>
+    <div class="export-btn-div">
+      <button class="btn btn-primary btn-lg" (click)="exportToPdf()">Export to PDF</button>
     </div>
   </div>
 
-  <div class="show-preview">
+  <div class="show-preview border">
     <div>
       <p *ngIf="!showImage; else imgShown">
         Logo Ihrer Organisation

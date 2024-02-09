@@ -2,17 +2,33 @@ body {
   margin: 0;
   padding: 0;
 }
+
 .main {
 
   height: 100vh;
   display: grid;
-  grid-template-columns: 4fr 6fr;
+  grid-template-columns: 5fr 5fr;
 }
+
 .config {
-  border: orange 2px solid;
+  /*border: orange 2px solid;*/
   grid-template-columns: auto;
 }
+
 .show-preview {
-  border: red 2px solid;
+  /*border: red 2px solid;*/
   grid-template-columns: auto;
+}
+
+.file-chooser {
+  margin: 6rem auto 3rem auto;
+
+}
+.event-desc {
+  margin: 3rem auto;
+}
+.export-btn-div {
+  margin-top: 6rem ;
+  display: flex;
+  justify-content: center;
 }
