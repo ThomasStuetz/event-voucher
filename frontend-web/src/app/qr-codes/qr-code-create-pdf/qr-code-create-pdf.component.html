@@ -1,9 +1,13 @@
 <div #pdfContent class="border-2" hidden>
-  <div *ngFor="let qrcode of qrcodes">
-    <img class="image" [src]="'http://localhost:8080/' + qrcode.qrCodeImagePath" alt="qr-code">
+  <img *ngIf="!this.showImage; else elseBlockImg" src="{{imgElement}}" alt="company-logo">
+  <ng-template #elseBlockImg>
+  </ng-template>
+    <div *ngFor="let qrcode of qrcodes">
 
-    <h2>{{ qrcode.valueEuro }}</h2>
-  </div>
+      <img class="image" [src]="'http://localhost:8080/' + qrcode.qrCodeImagePath" alt="qr-code">
+      <h2>{{ qrcode.valueEuro }}</h2>
+    </div>
+    <h2>{{eventName}}</h2>
 </div>
 
 <div class="main">
@@ -24,14 +28,15 @@
     </div>
     <div class="event-desc input-group w-75">
       <span class="input-group-text" id="inputGroup-sizing-default">Name des Events</span>
-      <input type="text" class="form-control" aria-label="Sizing example input"
+      <input [(ngModel)]="eventName" type="text" class="form-control" aria-label="Sizing example input"
              aria-describedby="inputGroup-sizing-default">
     </div>
+
     <div class="m-md-3">
       <p class="text-center">Der Geldwert der Tickets entspricht dem Betrag,<br>
         den Sie bei der Erstellung angegeben haben,<br>
         und wird automatisch angezeigt. <br>
-        </p>
+      </p>
     </div>
     <div class="export-btn-div">
       <button class="btn btn-primary btn-lg" (click)="exportToPdf()">Export to PDF</button>
@@ -39,22 +44,28 @@
   </div>
 
   <div class="show-preview border">
-    <div>
+    <div class="company-img w-75 text-center">
       <p *ngIf="!showImage; else imgShown">
         Logo Ihrer Organisation
       </p>
       <ng-template #imgShown>
-        <img id="companyLogo" class="w-50 h-auto">
+        <img id="companyLogo" class="w-50 h-auto" alt="company-logo"/>
       </ng-template>
 
     </div>
 
-    <div>
-      <img [src]="'http://localhost:8080/' + qrcodes[1].qrCodeImagePath" alt="qr-code">
+    <div class="qr-code-preview w-100">
+      <ng-container *ngIf="qrcodes[0]">
+        <img class="" [src]="'http://localhost:8080/' + qrcodes[1].qrCodeImagePath" alt="qr-code">
+      </ng-container>
+    </div>
+    <div class="company-name w-75">
+      <h2>{{ eventName }}</h2>
     </div>
     <div>
-      <h2>Wert des Tickets: {{ qrcodes[0].valueEuro }}€</h2>
-
+      <ng-container *ngIf="qrcodes[0]">
+        <h2>Wert des Tickets: {{ qrcodes[0].valueEuro }}€</h2>
+      </ng-container>
     </div>
   </div>
 </div>

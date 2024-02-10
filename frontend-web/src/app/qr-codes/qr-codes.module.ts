@@ -3,6 +3,7 @@ import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {QrCodeListComponent} from "./qr-code-list/qr-code-list.component";
 import {QrCodeListItemComponent} from "./qr-code-list-item/qr-code-list-item.component";
 import { QrCodeCreatePdfComponent } from './qr-code-create-pdf/qr-code-create-pdf.component';
+import {FormsModule} from "@angular/forms";
 
 
 
@@ -15,9 +16,10 @@ import { QrCodeCreatePdfComponent } from './qr-code-create-pdf/qr-code-create-pd
   exports: [
     QrCodeListComponent
   ],
-  imports: [
-    CommonModule,
-    NgOptimizedImage
-  ]
+    imports: [
+        CommonModule,
+        NgOptimizedImage,
+        FormsModule
+    ]
 })
 export class QrCodesModule { }

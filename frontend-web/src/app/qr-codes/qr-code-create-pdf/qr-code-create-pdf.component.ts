@@ -12,6 +12,7 @@ import {Qrcode} from "../../shared/qrcode";
 export class QrCodeCreatePdfComponent {
 
   qrcodes: Qrcode[] = []
+  eventName: string = '';
 
   constructor(private service: QrCodeStoreService, private router: Router) {
 
@@ -26,6 +27,7 @@ export class QrCodeCreatePdfComponent {
   }
 
   @ViewChild('pdfContent') pdfContent: ElementRef | undefined;
+
 
   exportToPdf() {
     if (this.pdfContent) {
@@ -77,12 +79,32 @@ export class QrCodeCreatePdfComponent {
         }
 
         // Add image to PDF
-        pdf.addImage(imgData, 'PNG', xPos, yPos, imgWidth, imgHeight);
+        pdf.addImage(imgData, 'PNG', xPos, yPos + 15, imgWidth, imgHeight);
 
+        // Add second image on top of the QR code
+        // pdf.addImage(this.imgElement, 'PNG', xPos + 10, yPos, imgWidth - 10, imgHeight - 65);
+
+        // Get the width and height of this.imgElement
+        const imgElementWidth = this.imgElement.width;
+        const imgElementHeight = this.imgElement.height;
+
+// Calculate the aspect ratio of this.imgElement
+        const aspectRatio = imgElementWidth / imgElementHeight;
+
+// Adjust the width and height of the image being added to the PDF
+        const adjustedWidth = imgWidth - 10; // Subtract 10 for some padding
+        const adjustedHeight = adjustedWidth / aspectRatio;
+
+// Add image to PDF with adjusted width and height
+        pdf.addImage(this.imgElement, 'PNG', xPos + 10, yPos, adjustedWidth, adjustedHeight);
+
+
+
+        pdf.text(this.eventName, xPos + imgWidth / 2, yPos + imgHeight + 15, {align: 'center'})
 
         // Add text below the QR code
         const valueEuro = `Wert des Tickets: ${this.qrcodes[0].valueEuro}€`
-        pdf.text(valueEuro, xPos + imgWidth / 2, yPos + imgHeight + 10, { align: 'center' }); // Adjust position and alignment as needed
+        pdf.text(valueEuro, xPos + imgWidth / 2, yPos + imgHeight + 30, {align: 'center'}); // Adjust position and alignment as needed
       }
 
 
@@ -96,6 +118,7 @@ export class QrCodeCreatePdfComponent {
 
 
   showImage = false
+  imgElement: any
 
   onFileSelected(event: any) {
     this.showImage = true
@@ -103,9 +126,9 @@ export class QrCodeCreatePdfComponent {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        const imgElement = document.getElementById('companyLogo') as HTMLImageElement;
-        if (imgElement) {
-          imgElement.src = e.target?.result as string;
+        this.imgElement = document.getElementById('companyLogo') as HTMLImageElement;
+        if (this.imgElement) {
+          this.imgElement.src = e.target?.result as string;
         }
       };
       reader.readAsDataURL(file);
