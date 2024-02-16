@@ -9,6 +9,8 @@ import { QrCodeCreateComponent } from './qr-codes/qr-code-create/qr-code-create.
 import {FormsModule} from "@angular/forms";
 import { QrCodeDashboardComponent } from './qr-codes/qr-code-dashboard/qr-code-dashboard.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import {NgChartsModule} from "ng2-charts";
+
 
 @NgModule({
   declarations: [
@@ -17,13 +19,15 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     QrCodeDashboardComponent,
     SidebarComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        QrCodesModule,
-        HttpClientModule,
-        FormsModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    QrCodesModule,
+    HttpClientModule,
+    FormsModule,
+    NgChartsModule,
+
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -1,2 +1,21 @@
 
 <p>Qr-codes in use: {{getCount()}}</p>
+
+<canvas baseChart
+        [type]="'pie'"
+        [datasets]="pieChartDatasets"
+        [labels]="pieChartLabels"
+        [options]="pieChartOptions"
+        [plugins]="pieChartPlugins"
+        [legend]="pieChartLegend">
+</canvas>
+<canvas baseChart
+        [type]="'pie'"
+        [datasets]="pieChartDatasetsValid"
+        [labels]="pieChartLabelsValid"
+        [options]="pieChartOptions"
+        [plugins]="pieChartPlugins"
+        [legend]="pieChartLegend">
+</canvas>
+
+
