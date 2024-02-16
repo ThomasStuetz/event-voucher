@@ -45,5 +45,5 @@ nb-configuration.xml
 db-postgres/
 *.jar
 
-src/main/resources/META-INF/resources/qrcodes/*
+src/main/resources/META-INF/resources/qrcodes/*.png
 
