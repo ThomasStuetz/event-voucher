@@ -23,10 +23,15 @@ export class QrCodeDashboardComponent implements OnInit {
   }
 
   public pieChartOptions: ChartOptions<'pie'> = {
-    responsive: false
+    responsive: false,
+    elements: {
+      arc: {
+        backgroundColor: ['#EE4B2B', '#4CBB17']
+      }
+    }
   }
   public pieChartLabels = ['in use', 'free']
-  public pieChartLabelsValid = ['valid', 'not valid']
+  public pieChartLabelsValid = ['not valid', 'valid']
   public pieChartDatasets: any[] = [];
   public pieChartDatasetsValid: any[] = [];
   public pieChartLegend = true
