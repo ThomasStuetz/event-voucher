@@ -56,7 +56,7 @@ export class QrCodeDashboardComponent implements OnInit {
         }
       }
       this.pieChartDatasetsValid = [{
-        data: [valid, notValid]
+        data: [notValid, valid]
       }]
     })
   }
