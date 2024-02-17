@@ -4,6 +4,8 @@ import {QrCodeListComponent} from "./qr-code-list/qr-code-list.component";
 import {QrCodeListItemComponent} from "./qr-code-list-item/qr-code-list-item.component";
 import { QrCodeCreatePdfComponent } from './qr-code-create-pdf/qr-code-create-pdf.component';
 import {FormsModule} from "@angular/forms";
+import { BarChartComponent } from './bar-chart/bar-chart.component';
+import {NgChartsModule} from "ng2-charts";
 
 
 
@@ -11,15 +13,18 @@ import {FormsModule} from "@angular/forms";
   declarations: [
     QrCodeListComponent,
     QrCodeListItemComponent,
-    QrCodeCreatePdfComponent
+    QrCodeCreatePdfComponent,
+    BarChartComponent
   ],
   exports: [
-    QrCodeListComponent
+    QrCodeListComponent,
+    BarChartComponent
   ],
-    imports: [
-        CommonModule,
-        NgOptimizedImage,
-        FormsModule
-    ]
+  imports: [
+    CommonModule,
+    NgOptimizedImage,
+    FormsModule,
+    NgChartsModule
+  ]
 })
 export class QrCodesModule { }

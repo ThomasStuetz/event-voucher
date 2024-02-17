@@ -25,8 +25,7 @@ import {NgChartsModule} from "ng2-charts";
     QrCodesModule,
     HttpClientModule,
     FormsModule,
-    NgChartsModule,
-
+    NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

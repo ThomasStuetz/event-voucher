@@ -18,10 +18,6 @@ export class QrCodeDashboardComponent implements OnInit {
 
   }
 
-  getCount(): number {
-    return this.service.count
-  }
-
   public pieChartOptions: ChartOptions<'pie'> = {
     responsive: false,
     elements: {
