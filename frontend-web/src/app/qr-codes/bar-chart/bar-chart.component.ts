@@ -45,14 +45,12 @@ export class BarChartComponent implements OnInit {
         }
       }
 
-
       let minutes: string[] = qrcodes
         .filter(value => value.cancelDateTime)
         .map(value => {
           const cancelDateTime = new Date(value.cancelDateTime!);
-          return cancelDateTime.toLocaleTimeString([], { minute: '2-digit'});
-        });
-      console.log(minutes)
+          return cancelDateTime.toLocaleTimeString([], {minute: '2-digit'});
+        })
 
       let countFor1Quarter = 0
       let countFor2Quarter = 0
@@ -91,25 +89,24 @@ export class BarChartComponent implements OnInit {
       hours.sort();
       hours = hours.filter((value, index, array) => array.indexOf(value) === index);
 
-      console.log(hours)
       this.counter++
       if (this.counter < 2) {
 
+
+        console.log("slkdfjlskdf "+ countFor1Quarter)
         for (let i = 0; i < hours.length; i++) {
 
-          console.log("sdfsdf: " + i + 1);
-          console.log(hours.length);
+          this.chartLabel.push(
+            `${hours[i]}:00-${hours[i]}:15`,
+            `${hours[i]}:15-${hours[i]}:30`,
+            `${hours[i]}:30-${hours[i]}:45`,
+            `${hours[i]}:45-${(parseInt(hours[i]) + 1).toString().padStart(2, '0')}:00`
+          )
 
-            // Handle the last hour edge case
-            this.chartLabel.push(
-              `${hours[i]}:00-${hours[i]}:15`,
-              `${hours[i]}:15-${hours[i]}:30`,
-              `${hours[i]}:30-${hours[i]}:45`,
-              `${hours[i]}:45-${(parseInt(hours[i]) + 1).toString().padStart(2, '0')}:00`
-            )
         }
       }
-      console.log("counter: " + this.counter)
+
+
     })
 
 
