@@ -12,12 +12,17 @@ export class BarChartComponent implements OnInit {
 
   qrcodes: Qrcode[] = []
   chartData: number[] = []
-  count = 0
+  chartLabel: string[] = []
+
+  counter = 0
+
 
   public barChartData = [
     {data: this.chartData, label: 'Canceled Vouchers', backgroundColor: 'rgb(27,144,229)'}
   ]
-  public barChartLabels = ['00-15', '15-30', '30-45', '45-60']
+  //['00-15', '15-30', '30-45', '45-60']
+
+
   public barChartOptions: ChartOptions = {
     responsive: true,
   }
@@ -40,12 +45,14 @@ export class BarChartComponent implements OnInit {
         }
       }
 
+
       let minutes: string[] = qrcodes
         .filter(value => value.cancelDateTime)
         .map(value => {
           const cancelDateTime = new Date(value.cancelDateTime!);
-          return cancelDateTime.toLocaleTimeString([], { /*hour: '2-digit',*/ minute: '2-digit'});
+          return cancelDateTime.toLocaleTimeString([], { minute: '2-digit'});
         });
+      console.log(minutes)
 
       let countFor1Quarter = 0
       let countFor2Quarter = 0
@@ -75,7 +82,39 @@ export class BarChartComponent implements OnInit {
           }
         }
       }
+      let hours: string[] = qrcodes
+        .filter(value => value.cancelDateTime)
+        .map(value => {
+          const cancelDateTime = new Date(value.cancelDateTime!);
+          return cancelDateTime.getHours().toString().padStart(2, '0');
+        });
+      hours.sort();
+      hours = hours.filter((value, index, array) => array.indexOf(value) === index);
+
+      console.log(hours)
+      this.counter++
+      if (this.counter < 2) {
+
+        for (let i = 0; i < hours.length; i++) {
+
+          console.log("sdfsdf: " + i + 1);
+          console.log(hours.length);
+
+            // Handle the last hour edge case
+            this.chartLabel.push(
+              `${hours[i]}:00-${hours[i]}:15`,
+              `${hours[i]}:15-${hours[i]}:30`,
+              `${hours[i]}:30-${hours[i]}:45`,
+              `${hours[i]}:45-${(parseInt(hours[i]) + 1).toString().padStart(2, '0')}:00`
+            )
+        }
+      }
+      console.log("counter: " + this.counter)
     })
+
+
   }
+
+  public barChartLabels = this.chartLabel
 }
 
