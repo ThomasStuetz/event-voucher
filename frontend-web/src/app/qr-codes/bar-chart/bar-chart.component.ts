@@ -15,9 +15,9 @@ export class BarChartComponent implements OnInit {
   count = 0
 
   public barChartData = [
-      {data: [15, 13, 10, 9], label: 'Canceled Vouchers', backgroundColor: 'rgb(27,144,229)'}
+    {data: this.chartData, label: 'Canceled Vouchers', backgroundColor: 'rgb(27,144,229)'}
   ]
-  public barChartLabels = ['14:30-14:45', '14:45-15:00']
+  public barChartLabels = ['00-15', '15-30', '30-45', '45-60']
   public barChartOptions: ChartOptions = {
     responsive: true,
   }
@@ -31,32 +31,50 @@ export class BarChartComponent implements OnInit {
   ngOnInit(): void {
 
     this.service.getAll().subscribe(qrcodes => {
-      // console.log(qrcodes.filter(value => value.cancelDateTime))
 
-      let temp: string[] = qrcodes
+      this.barChartOptions = {
+        scales: {
+          y: {
+            max: qrcodes.length
+          }
+        }
+      }
+
+      let minutes: string[] = qrcodes
         .filter(value => value.cancelDateTime)
         .map(value => {
           const cancelDateTime = new Date(value.cancelDateTime!);
-          return cancelDateTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          return cancelDateTime.toLocaleTimeString([], { /*hour: '2-digit',*/ minute: '2-digit'});
         });
 
-      console.log(temp)
+      let countFor1Quarter = 0
+      let countFor2Quarter = 0
+      let countFor3Quarter = 0
+      let countFor4Quarter = 0
 
-      // for (let i = 0; i < qrcodes.length; i++) {
-      //   if (qrcodes[i].cancelDateTime != null) {
-      //     this.count++
-      //   }
-      // }
-      // // this.chartData.push(this.count)
-      //
-      // console.log("this chart data: " + this.chartData)
-      // this.barChartOptions = {
-      //   scales: {
-      //     y: {
-      //       max: qrcodes.length
-      //     }
-      //   }
-      // }
+      for (let i = 0; i < minutes.length; i++) {
+        let minute: number = parseInt(minutes[i]);
+        if (!isNaN(minute)) {
+          switch (true) {
+            case minute > 0 && minute < 15:
+              countFor1Quarter++
+              this.chartData[0] = countFor1Quarter;
+              break
+            case minute > 15 && minute < 30:
+              countFor2Quarter++
+              this.chartData[1] = countFor2Quarter;
+              break
+            case minute > 30 && minute < 45:
+              countFor3Quarter++
+              this.chartData[2] = countFor3Quarter;
+              break
+            case minute > 45 && minute < 60:
+              countFor4Quarter++
+              this.chartData[3] = countFor4Quarter;
+              break
+          }
+        }
+      }
     })
   }
 }
