@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
-import {Qrcode} from "../../shared/qrcode";
+import {Component} from '@angular/core';
 
 import {QrCodeStoreService} from "../../shared/qr-code-store.service";
-import {catchError, count, Observable} from "rxjs";
 
+declare var bootstrap: any;
 
 @Component({
   selector: 'mvf-qr-code-create',
@@ -15,16 +14,22 @@ export class QrCodeCreateComponent {
   value: number = 0
   count: number = 0
 
-  constructor(
-    private service: QrCodeStoreService) { }
+  constructor(private service: QrCodeStoreService) {
+  }
 
 
-  addVoucher(value: number , count: number){
+  addVoucher(value: number, count: number) {
     this.service.addVoucher(value, count)
       .subscribe(
         response => console.log('Successful!', response),
         error => console.log('Error!', error)
       )
+    this.showToast()
   }
 
+  showToast(): void {
+    const liveToast = document.getElementById('liveToast');
+    var toast = new bootstrap.Toast(liveToast);
+    toast.show();
+  }
 }
