@@ -39,7 +39,7 @@
       </p>
     </div>
     <div class="export-btn-div">
-      <button class="btn btn-primary btn-lg" (click)="exportToPdf()">Export to PDF</button>
+      <button class="btn btn-primary btn-lg" (click)="exportToPdf()">PDF erstellen</button>
     </div>
   </div>
 
@@ -54,15 +54,17 @@
 
     </div>
 
-    <div class="qr-code-preview w-100">
+    <div class="qr-code-preview d-flex justify-content-center mb-2">
       <ng-container *ngIf="qrcodes[0]">
         <img class="" [src]="'http://localhost:8080/' + qrcodes[1].qrCodeImagePath" alt="qr-code">
       </ng-container>
     </div>
-    <div class="company-name w-75">
+    <div class="d-flex justify-content-center w-100 mb-3">
+    <div class="text-center company-name w-75">
       <h2>{{ eventName }}</h2>
     </div>
-    <div>
+    </div>
+    <div class="d-flex justify-content-center mt-5">
       <ng-container *ngIf="qrcodes[0]">
         <h2>Wert des Tickets: {{ qrcodes[0].valueEuro }}€</h2>
       </ng-container>

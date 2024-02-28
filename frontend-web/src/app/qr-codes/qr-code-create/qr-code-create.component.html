@@ -1,19 +1,21 @@
 <div class="main">
-  <div class="input-group mb-3">
-    <span class="input-group-text"> Wert des qr codes</span>
+  <h1 class="text-center mb-5 m-4">Erstellen der QR Codes</h1>
+  <div class="input-group mb-3 w-50 input-field" id="upper-input">
+    <span class="input-group-text"> Wert des QR-Codes</span>
     <input type="number" class="form-control" [(ngModel)]="value" aria-label="Sizing example input"
            aria-describedby="inputGroup-sizing-default">
   </div>
-  <div class="input-group mb-3">
-    <span class="input-group-text">Default</span>
+  <div class="input-group mb-3 w-50 input-field">
+    <span class="input-group-text">Anzahl der QR-Codes</span>
     <input type="number" class="form-control" [(ngModel)]="count" aria-label="Sizing example input"
            aria-describedby="inputGroup-sizing-default">
   </div>
 
-
-  <button type="button" class="btn btn-primary" id="liveToastBtn"
-          (click)="addVoucher(value !== undefined ? value : 0, count !== undefined ? count : 0)">Show live toast
-  </button>
+  <div class="d-flex justify-content-center create-qr-btn">
+    <button type="button" class="btn btn-primary  align-content-center" id="liveToastBtn"
+            (click)="addVoucher(value !== undefined ? value : 0, count !== undefined ? count : 0)">Qr-Codes erstellen
+    </button>
+  </div>
 
   <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
     <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">

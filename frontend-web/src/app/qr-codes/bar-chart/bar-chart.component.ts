@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {QrCodeStoreService} from "../../shared/qr-code-store.service";
 import {Qrcode} from "../../shared/qrcode";
 import {ChartOptions} from "chart.js";
+import {ConsoleLogger} from "@angular/compiler-cli";
+import {createCssSelectorFromNode} from "@angular/compiler";
 
 @Component({
   selector: 'mvf-bar-chart',
@@ -36,7 +38,7 @@ export class BarChartComponent implements OnInit {
   ngOnInit(): void {
 
     this.service.getAll().subscribe(qrcodes => {
-
+      console.log("cancled value time")
       this.barChartOptions = {
         scales: {
           y: {
@@ -44,6 +46,28 @@ export class BarChartComponent implements OnInit {
           }
         }
       }
+
+      let hours: string[] = qrcodes
+        .filter(value => value.cancelDateTime)
+        .map(value => {
+          const cancelDateTime = new Date(value.cancelDateTime!);
+          return cancelDateTime.getHours().toString().padStart(2, '0');
+        });
+      hours.sort();
+      hours = hours.filter((value, index, array) => array.indexOf(value) === index);
+
+      this.counter++
+      if (this.counter < 2) {
+        for (let i = 0; i < hours.length; i++) {
+          this.chartLabel.push(
+            `${hours[i]}:00-${hours[i]}:15`,
+            `${hours[i]}:15-${hours[i]}:30`,
+            `${hours[i]}:30-${hours[i]}:45`,
+            `${hours[i]}:45-${(parseInt(hours[i]) + 1).toString().padStart(2, '0')}:00`
+          )
+        }
+      }
+      console.log(this.chartLabel);
 
       let minutes: string[] = qrcodes
         .filter(value => value.cancelDateTime)
@@ -60,51 +84,28 @@ export class BarChartComponent implements OnInit {
       for (let i = 0; i < minutes.length; i++) {
         let minute: number = parseInt(minutes[i]);
         if (!isNaN(minute)) {
+          console.log(i)
           switch (true) {
-            case minute > 0 && minute < 15:
+            case minute >= 0 && minute < 15:
               countFor1Quarter++
               this.chartData[0] = countFor1Quarter;
               break
-            case minute > 15 && minute < 30:
+            case minute >= 15 && minute < 30:
               countFor2Quarter++
               this.chartData[1] = countFor2Quarter;
               break
-            case minute > 30 && minute < 45:
+            case minute >= 30 && minute < 45:
               countFor3Quarter++
               this.chartData[2] = countFor3Quarter;
               break
-            case minute > 45 && minute < 60:
+            case minute >= 45 && minute < 60:
               countFor4Quarter++
               this.chartData[3] = countFor4Quarter;
               break
           }
         }
       }
-      let hours: string[] = qrcodes
-        .filter(value => value.cancelDateTime)
-        .map(value => {
-          const cancelDateTime = new Date(value.cancelDateTime!);
-          return cancelDateTime.getHours().toString().padStart(2, '0');
-        });
-      hours.sort();
-      hours = hours.filter((value, index, array) => array.indexOf(value) === index);
 
-      this.counter++
-      if (this.counter < 2) {
-
-
-        console.log("slkdfjlskdf "+ countFor1Quarter)
-        for (let i = 0; i < hours.length; i++) {
-
-          this.chartLabel.push(
-            `${hours[i]}:00-${hours[i]}:15`,
-            `${hours[i]}:15-${hours[i]}:30`,
-            `${hours[i]}:30-${hours[i]}:45`,
-            `${hours[i]}:45-${(parseInt(hours[i]) + 1).toString().padStart(2, '0')}:00`
-          )
-
-        }
-      }
 
 
     })

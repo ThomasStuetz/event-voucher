@@ -8,6 +8,11 @@ import {QrCodeCreatePdfComponent} from "./qr-codes/qr-code-create-pdf/qr-code-cr
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: '/dashboard',
+    pathMatch: 'full'
+  },
+  {
     path: 'dashboard',
     component: QrCodeDashboardComponent
   },

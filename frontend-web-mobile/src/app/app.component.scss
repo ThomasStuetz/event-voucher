@@ -1,0 +1,48 @@
+h1,
+h5,
+p {
+  font-weight: 600;
+  word-break: break-all;
+  font-family: 'Courier New', Courier, monospace;
+}
+div {
+  text-align: center;
+  background: #fdfdfd;
+
+  .button {
+    border-radius: 5px;
+    height: 60px;
+    width: 60px;
+    margin: 4px;
+    /*&disabled {*/
+    /*  cursor: no-drop;*/
+    /*}*/
+  }
+
+  .data {
+    background: antiquewhite;
+    border-radius: 5px;
+  }
+}
+.custom-button {
+  padding: 10px 20px;
+  background-color: #4caf50; /* Green background color */
+  color: white; /* White text color */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Optional: Add rounded corners */
+  cursor: pointer; /* Add a pointer cursor on hover */
+  margin: 5px; /* Add some margin between buttons */
+}
+.custom-button-deactive {
+  padding: 10px 20px;
+  background-color: #a0a0a0; /* Green background color */
+  color: white; /* White text color */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Optional: Add rounded corners */
+  cursor: pointer; /* Add a pointer cursor on hover */
+  margin: 5px; /* Add some margin between buttons */
+}
+
+.custom-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}

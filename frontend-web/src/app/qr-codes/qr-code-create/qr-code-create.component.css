@@ -1,3 +1,13 @@
 .main {
   height: 100vh;
 }
+#upper-input {
+  margin-top: 10rem;
+}
+.input-field {
+  margin: auto;
+  padding: 1.5rem;
+}
+.create-qr-btn {
+  margin-top: 3.5rem;
+}
