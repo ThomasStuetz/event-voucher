@@ -1,15 +1,18 @@
 package at.htlleonding.voucher.entity;
 
 import at.htlleonding.voucher.entity.dto.VoucherDto;
+import at.htlleonding.voucher.user.User;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.logging.Log;
 import jakarta.persistence.*;
 import org.eclipse.microprofile.config.ConfigProvider;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.hibernate.annotations.ManyToAny;
 
 
 import javax.imageio.ImageIO;
@@ -57,6 +60,10 @@ public class Voucher {
     @Column(name = "v_qrcode_image_path")
     private String qrCodeImagePath;
 
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private User userId;
+
     public Voucher() {
         this.createDateTime = LocalDateTime.now();
         this.isValid = true;
@@ -74,7 +81,6 @@ public class Voucher {
     public UUID getId() {
         return id;
     }
-
     public void setId(UUID id) {
         this.id = id;
     }

@@ -47,3 +47,5 @@ db-postgres/
 
 src/main/resources/META-INF/resources/qrcodes/*.png
 
+src/main/resources/privateKey.pem
+src/main/resources/publicKey.pem

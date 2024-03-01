@@ -1,0 +1,2 @@
+-- insert into ev_user (id, login, emailm, password)
+-- values ("1", "sebi", "sebi@mail.com", "sebi");

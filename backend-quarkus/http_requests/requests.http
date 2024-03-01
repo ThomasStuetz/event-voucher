@@ -19,3 +19,8 @@ GET http://localhost:8080/api/qrcodes
 Accept: application/json
 
 ###
+
+GET http://localhost:8080/users/login?login=sebi&password=sebi
+Content-Type: application/json
+
+###

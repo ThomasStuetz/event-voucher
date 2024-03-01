@@ -21,10 +21,10 @@ public class InitBean {
     void init(@Observes StartupEvent event) {
         Log.info("Staring with profile " + ConfigUtils.getProfiles());
         //if(ConfigUtils.getProfiles().get(0).equals("dev")) {
-        if(ConfigUtils.getProfiles().contains("dev")) {
-            IntStream.rangeClosed(1,10)
-                    .forEach(i -> voucherRepository.createVoucher(3));
-        }
+//        if(ConfigUtils.getProfiles().contains("dev")) {
+//            IntStream.rangeClosed(1,10)
+//                    .forEach(i -> voucherRepository.createVoucher(3));
+//        }
     }
 
 }
