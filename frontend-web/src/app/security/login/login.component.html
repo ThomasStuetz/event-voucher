@@ -1,0 +1,20 @@
+<main class="form-signin text-center">
+  <form>
+    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+    <div class="form-floating">
+      <input type="text" class="form-control" id="floatingInput" placeholder="htl-leonding" [(ngModel)]="login" [ngModelOptions]="{standalone: true}">
+      <label for="floatingInput">Username</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" class="form-control" id="floatingPassword" placeholder="Password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
+      <label for="floatingPassword">Password</label>
+    </div>
+
+    <div class="form-check text-start my-3">
+      have no acc <a routerLink="/register"  class="">Register</a>
+    </div>
+    <button routerLink="/dashboard" (click)="loginUser(login, password)"  class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+
+  </form>
+</main>

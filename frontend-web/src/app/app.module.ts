@@ -10,6 +10,8 @@ import {FormsModule} from "@angular/forms";
 import { QrCodeDashboardComponent } from './qr-codes/qr-code-dashboard/qr-code-dashboard.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import {NgChartsModule} from "ng2-charts";
+import { LoginComponent } from './security/login/login.component';
+import { RegisterComponent } from './security/register/register.component';
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import {NgChartsModule} from "ng2-charts";
     AppComponent,
     QrCodeCreateComponent,
     QrCodeDashboardComponent,
-    SidebarComponent
+    SidebarComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

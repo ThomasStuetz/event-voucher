@@ -4,13 +4,23 @@ import {QrCodeListComponent} from "./qr-codes/qr-code-list/qr-code-list.componen
 import {QrCodeCreateComponent} from "./qr-codes/qr-code-create/qr-code-create.component";
 import {QrCodeDashboardComponent} from "./qr-codes/qr-code-dashboard/qr-code-dashboard.component";
 import {QrCodeCreatePdfComponent} from "./qr-codes/qr-code-create-pdf/qr-code-create-pdf.component";
+import {LoginComponent} from "./security/login/login.component";
+import {RegisterComponent} from "./security/register/register.component";
 
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/dashboard',
+    redirectTo: '/login',
     pathMatch: 'full'
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'register',
+    component: RegisterComponent
   },
   {
     path: 'dashboard',
