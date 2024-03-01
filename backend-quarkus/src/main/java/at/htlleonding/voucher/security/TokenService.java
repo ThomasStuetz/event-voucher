@@ -1,5 +1,6 @@
 package at.htlleonding.voucher.security;
 
+import io.quarkus.security.User;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.json.Json;
 import org.eclipse.microprofile.jwt.Claims;

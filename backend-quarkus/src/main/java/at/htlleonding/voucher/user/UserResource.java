@@ -1,15 +1,12 @@
 package at.htlleonding.voucher.user;
 
-import at.htlleonding.voucher.entity.Token;
+import at.htlleonding.voucher.security.Token;
 import at.htlleonding.voucher.security.TokenService;
-import io.smallrye.jwt.auth.principal.JWTParser;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import jdk.jfr.ContentType;
-import org.eclipse.microprofile.jwt.Claims;
 
 @Path("/users")
 @Consumes(MediaType.APPLICATION_JSON)

@@ -16,7 +16,11 @@ export class LoginComponent {
 
   loginUser(login: string, password: string) {
     this.service.loginUser(login, password).subscribe(
-      response => console.log('login successful!', response),
+      response => {
+        console.log('login successful!', response)
+        const resObj = JSON.parse(JSON.stringify(response))
+        this.service.token = resObj.value
+      },
       error => console.log('Error while login!', error)
     )
 

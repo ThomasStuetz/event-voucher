@@ -61,7 +61,7 @@ public class Voucher {
     private String qrCodeImagePath;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "email")
     private User userId;
 
     public Voucher() {
@@ -133,6 +133,14 @@ public class Voucher {
         this.qrCodeImagePath = qrCodeImagePath;
     }
 
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) {
+        this.userId = userId;
+    }
+
     //endregion
 
 
@@ -154,6 +162,7 @@ public class Voucher {
                 , cancelDateTime
                 , isValid
                 , qrCodeImagePath
+                , userId
         );
     }
 

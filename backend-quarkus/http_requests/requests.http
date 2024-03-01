@@ -20,7 +20,7 @@ Accept: application/json
 
 ###
 
-GET http://localhost:8080/users/login?login=sebi&password=sebi
+GET http://localhost:8080/users/login?login=app&password=app
 Content-Type: application/json
 
 ###

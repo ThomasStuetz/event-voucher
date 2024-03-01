@@ -6,5 +6,4 @@ export interface Qrcode {
   qrCodeImagePath: string
   valid: boolean
   valueEuro: number
-
 }

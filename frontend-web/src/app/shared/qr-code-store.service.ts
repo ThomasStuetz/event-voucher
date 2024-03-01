@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
 import {catchError, map, Observable, Subject, throwError} from "rxjs";
 import {Qrcode} from "./qrcode";
 import {error} from "@angular/compiler-cli/src/transformers/util";
+import {SecurityService} from "./security.service";
 
 @Injectable({
   providedIn: 'root'
@@ -16,14 +17,18 @@ export class QrCodeStoreService {
 
   count: number = 0
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private securityService: SecurityService) {
     this.connectToWebSocket()
     this.fetchInitialQrCodes()
   }
 
   addVoucher(value: number, count: number): Observable<any> {
+    console.log("payload from token: " + this.securityService.getUserIdFromToken())
     const headers = new HttpHeaders().set('Accept', 'text/plain');
-    return this.http.post(`${this.apiUrl}/qrcodes?value=${value}&no=${count}`, {}, {headers, responseType: 'text'})
+    return this.http.post(`${this.apiUrl}/qrcodes?value=${value}&no=${count}&mail=${this.securityService.getUserIdFromToken()}`, {}, {
+      headers,
+      responseType: 'text'
+    })
       .pipe(
         catchError(this.handleError)
       );
@@ -35,12 +40,24 @@ export class QrCodeStoreService {
         this.qrCodeSubject.next(qrcodes); // Update the Subject with the initial QR codes
         this.count = qrcodes.length
         // console.log("count in inital fetch" + this.count)
-        // console.log('Initial QR codes fetched:', qrcodes)
+        console.log('Initial QR codes fetched:', qrcodes)
       },
       error: (error) => console.error('Error fetching initial QR codes:', error),
     });
   }
 
+  // fetchInitialQrCodes(email: string) {
+  //   // const params = new HttpParams().set('email', email);
+  //   this.http.get<Qrcode[]>(`${this.apiUrl}/qrcodes?`/*, {params}*/).subscribe({
+  //     next: (qrcodes) => {
+  //       this.qrCodeSubject.next(qrcodes); // Update the Subject with the initial QR codes
+  //       this.count = qrcodes.length
+  //       // console.log("count in inital fetch" + this.count)
+  //       // console.log('Initial QR codes fetched:', qrcodes)
+  //     },
+  //     error: (error) => console.error('Error fetching initial QR codes:', error),
+  //   });
+  // }
 
   private handleError(error: HttpErrorResponse) {
     console.error('Error processing action', error);

@@ -2,9 +2,13 @@ package at.htlleonding.voucher.control;
 
 import at.htlleonding.voucher.entity.Voucher;
 import at.htlleonding.voucher.entity.dto.VoucherDto;
+import at.htlleonding.voucher.user.User;
+import at.htlleonding.voucher.user.UserRepository;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.nio.file.Path;
@@ -25,6 +29,9 @@ public class VoucherRepository implements PanacheRepositoryBase<Voucher, UUID> {
     @ConfigProperty(name = "qrcode.web.path")
     String qrcodeWebPath;
 
+    @Inject
+    UserRepository userRepository;
+
 
     /**
      * Creates a new voucher with the given value in Euro.
@@ -35,8 +42,9 @@ public class VoucherRepository implements PanacheRepositoryBase<Voucher, UUID> {
      * @param valueEuro value of the voucher in Euro
      * @return created Voucher
      */
-    public Voucher createVoucher(int valueEuro) {
+    public Voucher createVoucher(int valueEuro, User user) {
         var voucher = new Voucher(valueEuro);
+        voucher.setUserId(user);
         persist(voucher);
         Log.info("persist voucher -> id = " + voucher.toString());
         voucher.setQrCodeImage(voucher.createQrCode());
@@ -66,16 +74,19 @@ public class VoucherRepository implements PanacheRepositoryBase<Voucher, UUID> {
      * @param valueEuro value of the voucher in Euro
      * @param noOfVouchers number of vouchers to create
      */
-    public void createBulkVouchers(int valueEuro, int noOfVouchers) {
+    public void createBulkVouchers(int valueEuro, int noOfVouchers, String emailOfUser) {
+
+        User user = userRepository.findByEmail(emailOfUser);
+
         Log.info("max vouchers to create: " + maxVouchersToCreate);
-        deleteAll();
+//        deleteAll();
         int noOfVouchersToCreate = Math.min(noOfVouchers, maxVouchersToCreate);
         Log.info("no of vouchers to create: " + noOfVouchersToCreate);
 //        IntStream.rangeClosed(1, noOfVouchersToCreate)
 //                .forEach(i -> createVoucher(valueEuro));
         List<Voucher> createdVouchers = IntStream
                 .rangeClosed(1, noOfVouchersToCreate)
-                .mapToObj(i -> createVoucher(valueEuro))
+                .mapToObj(i -> createVoucher(valueEuro, user))
                 .toList();
 
     }

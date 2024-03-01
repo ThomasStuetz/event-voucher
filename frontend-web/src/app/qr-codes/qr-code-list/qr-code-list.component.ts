@@ -3,6 +3,7 @@ import {Qrcode} from "../../shared/qrcode";
 import {QrCodeStoreService} from "../../shared/qr-code-store.service";
 import {NavigationEnd, Router} from "@angular/router";
 import {filter} from "rxjs";
+import {SecurityService} from "../../shared/security.service";
 
 @Component({
   selector: 'mvf-qr-code-list',
@@ -14,7 +15,7 @@ export class QrCodeListComponent {
   qrcodes: Qrcode[] = []
   @Output() selectQrCode = new EventEmitter<Qrcode>()
 
-  constructor(private service: QrCodeStoreService, private router: Router) {
+  constructor(private service: QrCodeStoreService, private router: Router, private securityService: SecurityService) {
 
     this.router.events.subscribe(event => {
       // console.log(event);

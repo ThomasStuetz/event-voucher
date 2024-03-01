@@ -18,6 +18,7 @@ export class QrCodeCreatePdfComponent {
 
     this.router.events.subscribe(event => {
       // console.log(event);
+      //TODO security service etc.
       service.fetchInitialQrCodes();
     });
     this.service.getAll().subscribe(qrcodes => {
