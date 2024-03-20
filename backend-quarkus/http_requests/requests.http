@@ -10,7 +10,7 @@ Accept: application/json
 
 ###
 
-GET http://localhost:8080/api/qrcodes/9ce62944-ed10-4d61-b781-598dfdb74a7c?amount=3
+GET http://localhost:8080/api/qrcodes/b650faf0-ad6f-44a3-8684-5aea6899b794?amount=5
 Accept: application/json
 
 ###
