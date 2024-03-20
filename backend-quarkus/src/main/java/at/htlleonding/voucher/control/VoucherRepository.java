@@ -9,6 +9,7 @@ import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.nio.file.Path;
@@ -31,6 +32,9 @@ public class VoucherRepository implements PanacheRepositoryBase<Voucher, UUID> {
 
     @Inject
     UserRepository userRepository;
+
+    @Inject
+    EntityManager entityManager;
 
 
     /**
@@ -67,6 +71,26 @@ public class VoucherRepository implements PanacheRepositoryBase<Voucher, UUID> {
     }
 
 
+    public void debitAmount(UUID id, int amount) {
+        var voucher = findById(id);
+        int dbAmount = voucher.getValueEuro();
+        if (dbAmount < amount) {
+            return;
+        }
+        int temp = voucher.getValueEuro() - amount;
+        if (temp < 1) {
+            cancelVoucher(id);
+        }
+        Query query = entityManager.createQuery("update Voucher v " +
+                "set v.valueEuro = :amount " +
+                "where v.id = :id");
+        query.setParameter("amount", temp);
+        query.setParameter("id", id);
+        query.executeUpdate();
+
+    }
+
+
     /**
      * Deletes all vouchers in the database.
      * Creates the number of vouchers with the given value
@@ -100,6 +124,17 @@ public class VoucherRepository implements PanacheRepositoryBase<Voucher, UUID> {
                             return v.toDto();
                         }
                 ).toList();
+    }
+
+    public Object getUserVouchers(String mail) {
+
+        Query query = entityManager.createQuery("SELECT v " +
+                "FROM Voucher v " +
+                "WHERE v.userId in (SELECT u.id FROM User u where u.email = :mail)");
+
+        query.setParameter("mail", mail);
+
+        return query.getResultList();
     }
 
 

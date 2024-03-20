@@ -5,7 +5,17 @@ Accept: application/json
 
 ###
 
-GET http://localhost:8080/api/qrcodes/1f92904e-44ed-4e98-8165-2a66afdf2308?cancel=true
+GET http://localhost:8080/api/qrcodes/9ce62944-ed10-4d61-b781-598dfdb74a7c?cancel=true
+Accept: application/json
+
+###
+
+GET http://localhost:8080/api/qrcodes/9ce62944-ed10-4d61-b781-598dfdb74a7c?amount=3
+Accept: application/json
+
+###
+
+GET http://localhost:8080/api/qrcodes/getAmount/9ce62944-ed10-4d61-b781-598dfdb74a7c
 Accept: application/json
 
 ###

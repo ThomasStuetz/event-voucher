@@ -3,6 +3,7 @@ package at.htlleonding.voucher.boundary;
 import at.htlleonding.voucher.control.VoucherRepository;
 import at.htlleonding.voucher.entity.Voucher;
 import at.htlleonding.voucher.entity.dto.VoucherDto;
+import com.fasterxml.jackson.databind.deser.std.UUIDDeserializer;
 import com.sun.tools.jconsole.JConsoleContext;
 import io.quarkus.logging.Log;
 import jakarta.inject.Inject;
@@ -23,22 +24,29 @@ public class VoucherResource {
     @Inject
     VoucherRepository voucherRepository;
 
-    @Inject
-    EntityManager entityManager;
-
     @GET
     @Path("{id}")
     @Transactional
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getVoucher(@PathParam("id") UUID id, @QueryParam("cancel") boolean cancel) {
+    public Response getVoucher(
+            @PathParam("id") UUID id,
+            @QueryParam("amount") int amount
+            /*@QueryParam("cancel") boolean cancel*/) {
 
-        if (cancel) {
-            voucherRepository.cancelVoucher(id);
-        }
+        voucherRepository.debitAmount(id, amount);
+
         Object voucher = voucherRepository.getAllVouchers();
         VoucherWebSocket.pushData(voucher);
 
         return Response.ok(voucherRepository.findById(id).toDto()).build();
+    }
+
+    @GET
+    @Path("/getAmount/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAmount(@PathParam("id") UUID id) {
+
+        return Response.ok(voucherRepository.findById(id).getValueEuro()).build();
     }
 
     @POST
@@ -49,6 +57,7 @@ public class VoucherResource {
             @QueryParam("no") int noOfVouchers,
             @QueryParam("mail") String emailOfUser
     ) {
+
         System.out.println(emailOfUser);
 
 
@@ -74,13 +83,7 @@ public class VoucherResource {
     ) {
         System.out.println(mail);
 
-        Query query = entityManager.createQuery("SELECT v " +
-                "FROM Voucher v " +
-                "WHERE v.userId in (SELECT u.id FROM User u where u.email = :mail)");
-
-        query.setParameter("mail", mail);
-        Object vouchers = query.getResultList();
-//        Object vouchers = voucherRepository.getAllVouchers();
+        Object vouchers = voucherRepository.getUserVouchers(mail);
         VoucherWebSocket.pushData(vouchers);
         return Response.ok(vouchers).build();
     }
