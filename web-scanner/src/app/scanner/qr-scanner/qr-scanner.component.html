@@ -1,0 +1,30 @@
+<p>qr-scanner works!</p>
+
+<ngx-scanner-qrcode #action="scanner" [config]="config" (event)="onEvent($event, action)"></ngx-scanner-qrcode>
+<br>
+
+<!-- Loading -->
+<p *ngIf="action.isLoading">⌛ Loading...</p>
+
+<!-- start -->
+<button (click)="action.isStart ? action.stop() : action.start()">{{action.isStart ? 'Stop' : 'Start'}}</button>
+
+
+
+
+<button (click)="openModal()" [ngClass]="action.isPause ? 'custom-button' : 'custom-button-deactive'">Entwerten</button>
+
+<ng-template #modalTemplate>
+  <h2>Select an Action</h2>
+  <button mat-button class="btn" (click)="validateBon(2)">2€</button>
+  <button mat-button class="btn" (click)="validateBon(3)">3€</button>
+  <button mat-button class="btn" (click)="validateBon(5)">5€</button>
+</ng-template>
+
+<button (click)="getAmount()" [ngClass]="action.isPause ? 'custom-button' : 'custom-button-deactive'">Wert auslesen</button>
+
+<!--<button (click)="restart()" [ngClass]="action.isPause ? 'custom-button' : 'custom-button-deactive'">Erneut scannen</button>-->
+
+<p>{{message}}</p>
+
+<p>your amount: {{this.service.amount}}</p>
