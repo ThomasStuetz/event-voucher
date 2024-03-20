@@ -1,14 +1,19 @@
 package at.htlleonding.voucher.boundary;
 
 import at.htlleonding.voucher.control.VoucherRepository;
+import at.htlleonding.voucher.entity.Voucher;
 import at.htlleonding.voucher.entity.dto.VoucherDto;
 import com.sun.tools.jconsole.JConsoleContext;
+import io.quarkus.logging.Log;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,6 +23,8 @@ public class VoucherResource {
     @Inject
     VoucherRepository voucherRepository;
 
+    @Inject
+    EntityManager entityManager;
 
     @GET
     @Path("{id}")
@@ -62,8 +69,18 @@ public class VoucherResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response allVouchers() {
-        Object vouchers = voucherRepository.getAllVouchers();
+    public Response allVouchers(
+            @QueryParam("mail") String mail
+    ) {
+        System.out.println(mail);
+
+        Query query = entityManager.createQuery("SELECT v " +
+                "FROM Voucher v " +
+                "WHERE v.userId in (SELECT u.id FROM User u where u.email = :mail)");
+
+        query.setParameter("mail", mail);
+        Object vouchers = query.getResultList();
+//        Object vouchers = voucherRepository.getAllVouchers();
         VoucherWebSocket.pushData(vouchers);
         return Response.ok(vouchers).build();
     }
