@@ -19,6 +19,7 @@ export class QrCodeCreateComponent {
 
 
   addVoucher(value: number, count: number) {
+    console.log("lksdjflksdjflskdfjsdlko")
     this.service.addVoucher(value, count)
       .subscribe(
         response => console.log('Successful!', response),

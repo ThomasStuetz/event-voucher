@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
-import {catchError, map, Observable, Subject, throwError} from "rxjs";
+import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
+import {catchError, Observable, Subject, throwError} from "rxjs";
 import {Qrcode} from "./qrcode";
-import {error} from "@angular/compiler-cli/src/transformers/util";
 import {SecurityService} from "./security.service";
 
 @Injectable({
@@ -19,7 +18,7 @@ export class QrCodeStoreService {
 
   constructor(private http: HttpClient, private securityService: SecurityService) {
     this.connectToWebSocket()
-    this.fetchInitialQrCodes()
+    // this.fetchInitialQrCodes()
   }
 
   addVoucher(value: number, count: number): Observable<any> {
@@ -35,7 +34,7 @@ export class QrCodeStoreService {
   }
 
   fetchInitialQrCodes() {
-    this.http.get<Qrcode[]>(`${this.apiUrl}/qrcodes`).subscribe({
+    this.http.get<Qrcode[]>(`${this.apiUrl}/qrcodes?mail=${this.securityService.getUserIdFromToken()}`).subscribe({
       next: (qrcodes) => {
         this.qrCodeSubject.next(qrcodes); // Update the Subject with the initial QR codes
         this.count = qrcodes.length

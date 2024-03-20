@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {User} from "./user";
-import {parseJson} from "@angular/cli/src/utilities/json-file";
+import {QrCodeStoreService} from "./qr-code-store.service";
 
 @Injectable({
   providedIn: 'root'
@@ -26,13 +26,7 @@ export class SecurityService {
   }
 
   loginUser(login:string,password:string) {
-    // const tokenob = this.http.get(`${this.loginUserUrl}?login=${login}&password=${password}`)
-    // console.log("slkdjfsklfj: " + tokenob)
-    //
-    //
-    // const token = JSON.stringify(tokenob);
-    // console.log("lksdjflkskdjflskd: " + token)
-
+    // this.qrService.fetchInitialQrCodes()
     return this.http.get(`${this.loginUserUrl}?login=${login}&password=${password}`)
   }
 
