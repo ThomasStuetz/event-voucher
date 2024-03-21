@@ -16,12 +16,13 @@ public class Event {
     @JoinColumn(name = "email")
     private User userId;
 
+    private int key;
+
     public Event() {
     }
 
-    public Event(String name, User userId) {
+    public Event(String name) {
         this.name = name;
-        this.userId = userId;
     }
 
     public Long getId() {
@@ -46,5 +47,13 @@ public class Event {
 
     public void setUserId(User userId) {
         this.userId = userId;
+    }
+
+    public int getKey() {
+        return key;
+    }
+
+    public void setKey(int key) {
+        this.key = key;
     }
 }
