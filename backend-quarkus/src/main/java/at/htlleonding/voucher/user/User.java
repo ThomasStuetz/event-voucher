@@ -8,7 +8,7 @@ import java.util.Set;
 
 
 @Entity
-@Table(name = "ev_user")
+@Table(name = "organization")
 public class User extends PanacheEntity {
 
     public String login;
