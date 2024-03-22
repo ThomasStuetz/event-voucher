@@ -1,14 +1,6 @@
-<input type="button" (click)="getEventsFromUser()" value="lksdjflksdfj">
-
-<div class="dropdown show">
-  <button (click)="getEventsFromUser()" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Select Name
-  </button>
-</div>
-
-<select name="cars" id="cars">
-  <option [value]="allEvents">All</option>
-  <option *ngFor="let item of items" (click)="" [value]="item.value">{{ item.name }}</option>
+<select name="events" id="events" [(ngModel)]="selectedItem" (change)="onSelect()">
+  <option [ngValue]="allEvents">All</option>
+  <option *ngFor="let item of items" [ngValue]="item.id">{{ item.name }}</option>
 </select>
 
 

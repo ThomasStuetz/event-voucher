@@ -14,12 +14,14 @@ import { LoginComponent } from './security/login/login.component';
 import { RegisterComponent } from './security/register/register.component';
 import { EventCreateComponent } from './event/event-create/event-create.component';
 import { EventDropdownComponent } from './event/event-dropdown/event-dropdown.component';
+import {QrCodeListComponent} from "./qr-codes/qr-code-list/qr-code-list.component";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     QrCodeCreateComponent,
+    QrCodeListComponent,
     QrCodeDashboardComponent,
     SidebarComponent,
     LoginComponent,
@@ -36,6 +38,9 @@ import { EventDropdownComponent } from './event/event-dropdown/event-dropdown.co
     NgChartsModule
   ],
   providers: [],
+  exports: [
+    EventDropdownComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

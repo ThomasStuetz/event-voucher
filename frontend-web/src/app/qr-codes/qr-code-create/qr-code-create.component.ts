@@ -13,14 +13,14 @@ export class QrCodeCreateComponent {
 
   value: number = 0
   count: number = 0
+  selectedValue: any;
 
   constructor(private service: QrCodeStoreService) {
   }
 
 
-  addVoucher(value: number, count: number) {
-    console.log("lksdjflksdjflskdfjsdlko")
-    this.service.addVoucher(value, count)
+  addVoucher(value: number, count: number, eventId: number) {
+    this.service.addVoucher(value, count, eventId)
       .subscribe(
         response => console.log('Successful!', response),
         error => console.log('Error!', error)
@@ -32,5 +32,9 @@ export class QrCodeCreateComponent {
     const liveToast = document.getElementById('liveToast');
     var toast = new bootstrap.Toast(liveToast);
     toast.show();
+  }
+
+  onDropdownSelectionChange(value: any) {
+    this.selectedValue = value;
   }
 }

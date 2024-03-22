@@ -2,7 +2,6 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import {Qrcode} from "../../shared/qrcode";
 import {QrCodeStoreService} from "../../shared/qr-code-store.service";
 import {NavigationEnd, Router} from "@angular/router";
-import {filter} from "rxjs";
 import {SecurityService} from "../../shared/security.service";
 
 @Component({
@@ -14,20 +13,35 @@ export class QrCodeListComponent {
 
   qrcodes: Qrcode[] = []
   @Output() selectQrCode = new EventEmitter<Qrcode>()
+  selectedValue: any;
 
   constructor(private service: QrCodeStoreService, private router: Router, private securityService: SecurityService) {
 
+
+    this.getAllVouchers()
+
+  }
+
+  getAllVouchers() {
     this.router.events.subscribe(event => {
-      // console.log(event);
-      service.fetchInitialQrCodes();
+      this.service.fetchInitialQrCodes();
     });
 
-
     this.service.getAll().subscribe(qrcodes => {
-      // console.log(this.qrcodes = qrcodes)
       this.qrcodes = qrcodes
     })
+  }
 
+  getVouchersFromEvent(id: number) {
+    this.service.getVouchersFromEvent(id)
+  }
 
+  onDropdownSelectionChange(value: any) {
+    this.selectedValue = value;
+    if (this.selectedValue == "all") {
+      this.getAllVouchers()
+    } else {
+      this.getVouchersFromEvent(this.selectedValue)
+    }
   }
 }

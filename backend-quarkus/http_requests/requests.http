@@ -28,6 +28,11 @@ Accept: text/plain
 GET http://localhost:8080/api/qrcodes?mail=app@mail.com
 Accept: application/json
 
+### get qr code for event
+
+GET http://localhost:8080/api/qrcodes/forEvent?event=1
+Content-Type: application/json
+
 ###
 
 GET http://localhost:8080/users/login?login=app&password=app

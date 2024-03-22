@@ -88,4 +88,13 @@ public class VoucherResource {
         return Response.ok(vouchers).build();
     }
 
+    @GET
+    @Path("/forEvent")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getVouchersFromEvent(
+            @QueryParam("event") Long eventId
+    ) {
+        System.out.println(eventId);
+        return Response.ok(voucherRepository.getVouchersFromEvent(eventId)).build();
+    }
 }

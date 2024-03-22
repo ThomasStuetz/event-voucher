@@ -128,6 +128,18 @@ public class VoucherRepository implements PanacheRepositoryBase<Voucher, UUID> {
                 ).toList();
     }
 
+    public Object getVouchersFromEvent(Long eventId) {
+
+        Event event = eventRepository.findById(eventId);
+
+        Query query = entityManager.createQuery("SELECT v " +
+                "FROM Voucher v " +
+                "WHERE v.eventId = :event", Voucher.class);
+
+        query.setParameter("event", event);
+        return query.getResultList();
+    }
+
     public Object getUserVouchers(String mail) {
 
 
