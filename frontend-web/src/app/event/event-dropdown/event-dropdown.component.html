@@ -1,7 +1,15 @@
-<div ng-app="myApp" ng-controller="myCtrl">
+<input type="button" (click)="getEventsFromUser()" value="lksdjflksdfj">
 
-  <select ng-model="selectedName" ng-options="x for x in names">
-  </select>
-
+<div class="dropdown show">
+  <button (click)="getEventsFromUser()" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Select Name
+  </button>
 </div>
+
+<select name="cars" id="cars">
+  <option [value]="allEvents">All</option>
+  <option *ngFor="let item of items" (click)="" [value]="item.value">{{ item.name }}</option>
+</select>
+
+
 

@@ -23,7 +23,7 @@ Accept: application/json
 POST http://localhost:8080/api/qrcodes?value=3&no=15&event=1
 Accept: text/plain
 
-###
+### get all qr codes
 
 GET http://localhost:8080/api/qrcodes?mail=app@mail.com
 Accept: application/json

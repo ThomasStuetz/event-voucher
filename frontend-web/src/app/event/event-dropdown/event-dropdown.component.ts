@@ -8,9 +8,28 @@ import {EventStoreService} from "../../shared/event-store.service";
 })
 export class EventDropdownComponent {
 
+  items: any = []
+  allEvents: any;
 
   constructor(private eventSvc:  EventStoreService) {
-
+    this.getEventsFromUser()
   }
+
+  getEventsFromUser() {
+    this.eventSvc.getEventsForUser()
+    this.eventSvc.getEventsForUser()
+      .subscribe(
+      (events: any[]) => {
+        console.log(events); // Print received events to console
+        // Assign events to your array
+        this.items = events; // Assuming eventsArray is your array variable
+      },
+      error => {
+        console.error('Error fetching events:', error);
+      }
+    );
+  }
+
+
 
 }

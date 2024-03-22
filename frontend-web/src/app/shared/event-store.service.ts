@@ -15,8 +15,12 @@ export class EventStoreService {
   }
 
 
-  getEventsForUser() {
-    this.http.get(`${this.url}?mail=${this.securityService.getUserIdFromToken()}`)
+  getEventsForUser(): Observable<any> {
+    return this.http.get(`${this.url}?mail=${this.securityService.getUserIdFromToken()}`)
+  }
+
+  getVouhcersForEvents() {
+
   }
 
   createEvent(name: string) {
