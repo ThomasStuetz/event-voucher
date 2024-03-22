@@ -1,0 +1,11 @@
+<span class="input-group-text"> name des events</span>
+<input type="text" class="form-control" [(ngModel)]="name" aria-label="Sizing example input"
+       aria-describedby="inputGroup-sizing-default">
+<div class="d-flex justify-content-center create-qr-btn">
+  <button type="button" class="btn btn-primary  align-content-center" id="liveToastBtn"
+          (click)="createEvent(name)">Event erstellen
+  </button>
+</div>
+
+
+<mvf-event-dropdown></mvf-event-dropdown>

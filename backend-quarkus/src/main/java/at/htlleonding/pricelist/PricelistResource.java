@@ -35,22 +35,23 @@ public class PricelistResource {
     }
 
 
-//    @POST
-//    @Transactional
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public Response createPricelist(Map<String, Integer> prices) {
-//
-//        for (Map.Entry<String, Integer> entry : prices.entrySet()) {
-//            String productType = entry.getKey();
-//            int price = entry.getValue();
-//            if (price != 0) {
-//                pricelistRepository.createPricelist(productType, price);
-//            }
-//        }
-//        return Response.ok().build();
-////        return Response.ok(/*pricelistRepository.createPricelist(alkPrice, price)*/).build();
-//
-//    }
+    @POST
+    @Transactional
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createPricelist(
+            Map<String, Integer> prices,
+            @QueryParam("eventName") String eventName
+    ) {
+
+        for (Map.Entry<String, Integer> entry : prices.entrySet()) {
+            String productType = entry.getKey();
+            int price = entry.getValue();
+            if (price != 0) {
+                pricelistRepository.createPricelist(productType, price, eventName);
+            }
+        }
+        return Response.ok().build();
+    }
 
 
 //    @POST

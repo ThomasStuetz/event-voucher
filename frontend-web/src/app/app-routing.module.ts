@@ -6,6 +6,7 @@ import {QrCodeDashboardComponent} from "./qr-codes/qr-code-dashboard/qr-code-das
 import {QrCodeCreatePdfComponent} from "./qr-codes/qr-code-create-pdf/qr-code-create-pdf.component";
 import {LoginComponent} from "./security/login/login.component";
 import {RegisterComponent} from "./security/register/register.component";
+import {EventCreateComponent} from "./event/event-create/event-create.component";
 
 
 const routes: Routes = [
@@ -25,6 +26,10 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: QrCodeDashboardComponent
+  },
+  {
+    path: 'createEvent',
+    component: EventCreateComponent
   },
   {
     path: 'list',

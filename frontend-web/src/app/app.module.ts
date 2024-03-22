@@ -12,6 +12,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import {NgChartsModule} from "ng2-charts";
 import { LoginComponent } from './security/login/login.component';
 import { RegisterComponent } from './security/register/register.component';
+import { EventCreateComponent } from './event/event-create/event-create.component';
+import { EventDropdownComponent } from './event/event-dropdown/event-dropdown.component';
 
 
 @NgModule({
@@ -21,7 +23,9 @@ import { RegisterComponent } from './security/register/register.component';
     QrCodeDashboardComponent,
     SidebarComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    EventCreateComponent,
+    EventDropdownComponent
   ],
   imports: [
     BrowserModule,
