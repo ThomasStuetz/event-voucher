@@ -2,6 +2,7 @@ package at.htlleonding.voucher.entity.dto;
 
 
 
+import at.htlleonding.event.Event;
 import at.htlleonding.voucher.user.User;
 
 import java.time.LocalDateTime;
@@ -14,6 +15,6 @@ public record VoucherDto (
         LocalDateTime cancelDateTime,
         boolean valid,
         String qrCodeImagePath,
-        User emailUser
+        Event eventId
 
 ) { }

@@ -55,13 +55,13 @@ public class VoucherResource {
     public Response createVoucher(
             @QueryParam("value") int valueEuro,
             @QueryParam("no") int noOfVouchers,
-            @QueryParam("mail") String emailOfUser
+            @QueryParam("event") Long eventId
     ) {
 
-        System.out.println(emailOfUser);
+        System.out.println(eventId);
 
 
-        voucherRepository.createBulkVouchers(valueEuro, noOfVouchers, emailOfUser);
+        voucherRepository.createBulkVouchers(valueEuro, noOfVouchers, eventId);
 
         Object voucher = voucherRepository.getAllVouchers();
         VoucherWebSocket.pushData(voucher); // Send updated list to all WebSocket clients

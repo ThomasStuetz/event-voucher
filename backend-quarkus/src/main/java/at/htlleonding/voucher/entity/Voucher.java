@@ -1,5 +1,6 @@
 package at.htlleonding.voucher.entity;
 
+import at.htlleonding.event.Event;
 import at.htlleonding.voucher.entity.dto.VoucherDto;
 import at.htlleonding.voucher.user.User;
 import com.google.zxing.BarcodeFormat;
@@ -61,8 +62,8 @@ public class Voucher {
     private String qrCodeImagePath;
 
     @ManyToOne
-    @JoinColumn(name = "email")
-    private User userId;
+    @JoinColumn(name = "event_id")
+    private Event eventId;
 
     public Voucher() {
         this.createDateTime = LocalDateTime.now();
@@ -133,12 +134,12 @@ public class Voucher {
         this.qrCodeImagePath = qrCodeImagePath;
     }
 
-    public User getUserId() {
-        return userId;
+    public Event getEventId() {
+        return eventId;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setEventId(Event eventId) {
+        this.eventId = eventId;
     }
 
     //endregion
@@ -162,7 +163,7 @@ public class Voucher {
                 , cancelDateTime
                 , isValid
                 , qrCodeImagePath
-                , userId
+                , eventId
         );
     }
 

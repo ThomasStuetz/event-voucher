@@ -1,5 +1,7 @@
 package at.htlleonding.voucher.control;
 
+import at.htlleonding.event.Event;
+import at.htlleonding.event.EventRepository;
 import at.htlleonding.voucher.entity.Voucher;
 import at.htlleonding.voucher.entity.dto.VoucherDto;
 import at.htlleonding.voucher.user.User;
@@ -31,7 +33,7 @@ public class VoucherRepository implements PanacheRepositoryBase<Voucher, UUID> {
     String qrcodeWebPath;
 
     @Inject
-    UserRepository userRepository;
+    EventRepository eventRepository;
 
     @Inject
     EntityManager entityManager;
@@ -46,9 +48,9 @@ public class VoucherRepository implements PanacheRepositoryBase<Voucher, UUID> {
      * @param valueEuro value of the voucher in Euro
      * @return created Voucher
      */
-    public Voucher createVoucher(int valueEuro, User user) {
+    public Voucher createVoucher(int valueEuro, Event event) {
         var voucher = new Voucher(valueEuro);
-        voucher.setUserId(user);
+        voucher.setEventId(event);
         persist(voucher);
         Log.info("persist voucher -> id = " + voucher.toString());
         voucher.setQrCodeImage(voucher.createQrCode());
@@ -98,9 +100,9 @@ public class VoucherRepository implements PanacheRepositoryBase<Voucher, UUID> {
      * @param valueEuro value of the voucher in Euro
      * @param noOfVouchers number of vouchers to create
      */
-    public void createBulkVouchers(int valueEuro, int noOfVouchers, String emailOfUser) {
+    public void createBulkVouchers(int valueEuro, int noOfVouchers, Long eventId) {
 
-        User user = userRepository.findByEmail(emailOfUser);
+        Event event = eventRepository.findById(eventId);
 
         Log.info("max vouchers to create: " + maxVouchersToCreate);
 //        deleteAll();
@@ -110,7 +112,7 @@ public class VoucherRepository implements PanacheRepositoryBase<Voucher, UUID> {
 //                .forEach(i -> createVoucher(valueEuro));
         List<Voucher> createdVouchers = IntStream
                 .rangeClosed(1, noOfVouchersToCreate)
-                .mapToObj(i -> createVoucher(valueEuro, user))
+                .mapToObj(i -> createVoucher(valueEuro, event))
                 .toList();
 
     }
@@ -128,9 +130,12 @@ public class VoucherRepository implements PanacheRepositoryBase<Voucher, UUID> {
 
     public Object getUserVouchers(String mail) {
 
+
         Query query = entityManager.createQuery("SELECT v " +
                 "FROM Voucher v " +
-                "WHERE v.userId in (SELECT u.id FROM User u where u.email = :mail)");
+                "JOIN v.eventId e " +
+                "JOIN e.userId u " +
+                "WHERE u.email = :mail", Voucher.class);
 
         query.setParameter("mail", mail);
 
