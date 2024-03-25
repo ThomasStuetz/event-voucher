@@ -20,9 +20,11 @@ export class QrCodeListComponent {
 
     this.getAllVouchers()
 
+
   }
 
   getAllVouchers() {
+
     this.router.events.subscribe(event => {
       this.service.fetchInitialQrCodes();
     });

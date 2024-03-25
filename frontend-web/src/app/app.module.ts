@@ -15,12 +15,14 @@ import { RegisterComponent } from './security/register/register.component';
 import { EventCreateComponent } from './event/event-create/event-create.component';
 import { EventDropdownComponent } from './event/event-dropdown/event-dropdown.component';
 import {QrCodeListComponent} from "./qr-codes/qr-code-list/qr-code-list.component";
+import {QrCodeCreatePdfComponent} from "./qr-codes/qr-code-create-pdf/qr-code-create-pdf.component";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     QrCodeCreateComponent,
+    QrCodeCreatePdfComponent,
     QrCodeListComponent,
     QrCodeDashboardComponent,
     SidebarComponent,

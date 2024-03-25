@@ -3,6 +3,7 @@ import jsPDF from "jspdf";
 import {QrCodeStoreService} from "../../shared/qr-code-store.service";
 import {Router} from "@angular/router";
 import {Qrcode} from "../../shared/qrcode";
+import {EventDropdownComponent} from "../../event/event-dropdown/event-dropdown.component";
 
 @Component({
   selector: 'mvf-qr-code-create-pdf',
@@ -11,23 +12,32 @@ import {Qrcode} from "../../shared/qrcode";
 })
 export class QrCodeCreatePdfComponent {
 
+  @ViewChild('pdfContent') pdfContent: ElementRef | undefined;
   qrcodes: Qrcode[] = []
-  eventName: string = '';
+  eventName: string = ''
+  selectedValue: any;
 
   constructor(private service: QrCodeStoreService, private router: Router) {
 
-    this.router.events.subscribe(event => {
-      // console.log(event);
-      //TODO security service etc.
-      service.fetchInitialQrCodes();
-    });
+    // this.router.events.subscribe(event => {
+    //   // console.log(event);
+    //   //TODO security service etc.
+    //   service.fetchInitialQrCodes();
+    // });
     this.service.getAll().subscribe(qrcodes => {
       // console.log(this.qrcodes = qrcodes)
       this.qrcodes = qrcodes
     })
   }
 
-  @ViewChild('pdfContent') pdfContent: ElementRef | undefined;
+  getAllFromEventForPdf(id: number) {
+    this.service.getVouchersFromEvent(id)
+  }
+
+  onDropdownSelectionChange(value: any) {
+    this.selectedValue = value
+    console.log("klsdjkflksdfj" + this.getAllFromEventForPdf(this.selectedValue));
+  }
 
 
   exportToPdf() {

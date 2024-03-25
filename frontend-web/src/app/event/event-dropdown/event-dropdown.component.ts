@@ -32,6 +32,7 @@ export class EventDropdownComponent {
   }
 
   onSelect() {
+    console.log("hello this my name: " + this.items[0].name)
     console.log(this.items[0].id)
     if (this.selectedItem == undefined) {
       return this.selectionChange.emit("all")
