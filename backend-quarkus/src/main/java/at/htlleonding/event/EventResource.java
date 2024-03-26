@@ -39,4 +39,14 @@ public class EventResource {
     ) {
         return Response.ok(eventRepository.getEventByName(name)).build();
     }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/eventName")
+    public Response getEventName(
+            @QueryParam("id") Long id
+    ) {
+        return Response.ok(eventRepository.findById(id).getName()).build();
+    }
+
 }

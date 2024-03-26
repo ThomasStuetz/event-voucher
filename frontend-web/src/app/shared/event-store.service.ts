@@ -33,4 +33,8 @@ export class EventStoreService {
       )
   }
 
+  getEventName(id: number): Observable<string> {
+    return this.http.get(`${this.url}/eventName?id=${id}`, { responseType: 'text' })
+  }
+
 }

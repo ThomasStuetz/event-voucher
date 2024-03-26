@@ -38,7 +38,7 @@ export class BarChartComponent implements OnInit {
   ngOnInit(): void {
 
     this.service.getAll().subscribe(qrcodes => {
-      console.log("cancled value time")
+      // console.log("cancled value time")
       this.barChartOptions = {
         scales: {
           y: {
@@ -67,7 +67,7 @@ export class BarChartComponent implements OnInit {
           )
         }
       }
-      console.log(this.chartLabel);
+      // console.log(this.chartLabel);
 
       let minutes: string[] = qrcodes
         .filter(value => value.cancelDateTime)
@@ -84,7 +84,7 @@ export class BarChartComponent implements OnInit {
       for (let i = 0; i < minutes.length; i++) {
         let minute: number = parseInt(minutes[i]);
         if (!isNaN(minute)) {
-          console.log(i)
+          // console.log(i)
           switch (true) {
             case minute >= 0 && minute < 15:
               countFor1Quarter++

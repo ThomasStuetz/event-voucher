@@ -3,7 +3,7 @@ import jsPDF from "jspdf";
 import {QrCodeStoreService} from "../../shared/qr-code-store.service";
 import {Router} from "@angular/router";
 import {Qrcode} from "../../shared/qrcode";
-import {EventDropdownComponent} from "../../event/event-dropdown/event-dropdown.component";
+import {EventStoreService} from "../../shared/event-store.service";
 
 @Component({
   selector: 'mvf-qr-code-create-pdf',
@@ -17,7 +17,7 @@ export class QrCodeCreatePdfComponent {
   eventName: string = ''
   selectedValue: any;
 
-  constructor(private service: QrCodeStoreService, private router: Router) {
+  constructor(private service: QrCodeStoreService, private router: Router, private eventService: EventStoreService) {
 
     // this.router.events.subscribe(event => {
     //   // console.log(event);
@@ -34,9 +34,22 @@ export class QrCodeCreatePdfComponent {
     this.service.getVouchersFromEvent(id)
   }
 
+  getEventName(id: number): void {
+    this.eventService.getEventName(id)
+      .subscribe(
+        (response: any) => {
+          this.eventName = response;
+        },
+        (error: any) => {
+          // Handle error if needed
+          console.error('Error:', error);
+        })
+  }
+
   onDropdownSelectionChange(value: any) {
     this.selectedValue = value
-    console.log("klsdjkflksdfj" + this.getAllFromEventForPdf(this.selectedValue));
+    this.getEventName(this.selectedValue)
+    this.getAllFromEventForPdf(this.selectedValue)
   }
 
 
@@ -108,7 +121,6 @@ export class QrCodeCreatePdfComponent {
 
 // Add image to PDF with adjusted width and height
         pdf.addImage(this.imgElement, 'PNG', xPos + 10, yPos, adjustedWidth, adjustedHeight);
-
 
 
         pdf.text(this.eventName, xPos + imgWidth / 2, yPos + imgHeight + 15, {align: 'center'})

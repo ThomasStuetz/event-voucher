@@ -74,4 +74,7 @@ GET http://localhost:8080/api/product?name=sonstiges
 
 GET http://localhost:8080/api/events/getByName?name=tdot
 
+### get event name
+
+GET http://localhost:8080/api/events/eventName?id=7
 
