@@ -1,4 +1,4 @@
-= Meal Voucher | Sebastian Hager
+= Voucher administration | Sebastian Hager
 
 An application to create, cancel and list QR-CODES.
 
