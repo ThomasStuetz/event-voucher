@@ -28,7 +28,7 @@ export class EventDropdownComponent {
         error => {
           console.error('Error fetching events:', error);
         }
-      );
+      )
   }
 
   onSelect() {
@@ -39,6 +39,8 @@ export class EventDropdownComponent {
     }
     return this.selectionChange.emit(this.selectedItem)
   }
+
+
 
 
 }

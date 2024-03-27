@@ -55,15 +55,12 @@ Content-Type: application/json
 
 ### create pricelist items
 
-POST http://localhost:8080/api/pricelist?eventId=8
+POST http://localhost:8080/api/pricelist?eventId=1
 Content-Type: application/json
 
 {
-  "alkoholfrei": 2,
-  "alkoholisch": 3,
-  "essen": 4,
-  "kuchen": 2,
-  "sonstiges": 5
+  "alkohol frei": 4,
+  "alkoholisch": 3
 }
 
 ###

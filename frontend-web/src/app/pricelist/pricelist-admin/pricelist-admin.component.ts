@@ -1,8 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {PricelistStoreService} from "../../shared/pricelist-store.service";
-import {Qrcode} from "../../shared/qrcode";
 import {Pricelist} from "../../shared/pricelist";
-import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Component({
   selector: 'mvf-pricelist-admin',
@@ -35,4 +33,24 @@ export class PricelistAdminComponent {
   helloWorld() {
     console.log("hello world")
   }
+
+  @ViewChild('exampleModal') modalElement: ElementRef | undefined;
+
+  openModal() {
+    if (this.modalElement) {
+      this.modalElement.nativeElement.classList.add('show');
+      this.modalElement.nativeElement.style.display = 'block';
+      document.body.classList.add('modal-open');
+    }
+  }
+
+  closeModal() {
+    if (this.modalElement) {
+      this.modalElement.nativeElement.classList.remove('show');
+      this.modalElement.nativeElement.style.display = 'none';
+      document.body.classList.remove('modal-open');
+    }
+  }
+
+  protected readonly close = close;
 }

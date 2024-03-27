@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import {EventStoreService} from "../../shared/event-store.service";
-import {Observable} from "rxjs";
+import { Component } from '@angular/core'
+import {EventStoreService} from "../../shared/event-store.service"
+
+declare var bootstrap: any
 
 @Component({
   selector: 'mvf-event-create',
@@ -10,13 +11,19 @@ import {Observable} from "rxjs";
 export class EventCreateComponent {
 
   name: string = ""
-  mail: string = ""
 
-  constructor(private eventSvc: EventStoreService, ) {
+  constructor(private eventSvc: EventStoreService) {
   }
 
 
   createEvent(name:string) {
     this.eventSvc.createEvent(name)
+    this.showToast()
+  }
+
+  showToast(): void {
+    const liveToast = document.getElementById('liveToast');
+    var toast = new bootstrap.Toast(liveToast);
+    toast.show();
   }
 }
