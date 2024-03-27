@@ -7,6 +7,8 @@ import {QrCodeCreatePdfComponent} from "./qr-codes/qr-code-create-pdf/qr-code-cr
 import {LoginComponent} from "./security/login/login.component";
 import {RegisterComponent} from "./security/register/register.component";
 import {EventCreateComponent} from "./event/event-create/event-create.component";
+import {PricelistStoreService} from "./shared/pricelist-store.service";
+import {PricelistAdminComponent} from "./pricelist/pricelist-admin/pricelist-admin.component";
 
 
 const routes: Routes = [
@@ -28,8 +30,12 @@ const routes: Routes = [
     component: QrCodeDashboardComponent
   },
   {
-    path: 'createEvent',
+    path: 'create-event',
     component: EventCreateComponent
+  },
+  {
+    path: 'admin-pricelist',
+    component: PricelistAdminComponent
   },
   {
     path: 'list',

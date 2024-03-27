@@ -1,0 +1,24 @@
+<h1 class="text-center mb-5 m-4">Verwalten der Preislisten</h1>
+<hr>
+<div class="test">
+  <mvf-event-dropdown (selectionChange)="onDropdownSelectionChange($event)"></mvf-event-dropdown>
+
+  <button type="button" class="btn btn-primary" id="liveToastBtn" (click)="helloWorld()">Preisliste erstellen</button>
+</div>
+
+<table class="table table-hover border-1 text-center">
+  <thead class="bg-danger">
+  <tr class="bg-danger">
+    <th scope="col">Kategorie</th>
+    <th scope="col">Preis</th>
+  </tr>
+  </thead>
+
+  <tbody *ngFor="let pricelist of pricelists">
+  <tr *ngIf="pricelist" >
+    <td class="align-middle" scope="row">{{ pricelist.product.name }}</td>
+    <td class="align-middle">{{ pricelist.price }} €</td>
+  </tr>
+  </tbody>
+
+</table>

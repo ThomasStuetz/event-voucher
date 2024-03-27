@@ -4,6 +4,7 @@ import jakarta.inject.Inject;
 import jakarta.json.*;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -18,10 +19,13 @@ public class PricelistResource {
     PricelistRepository pricelistRepository;
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getPricelist(
-            @QueryParam("event") String event
+            @QueryParam("eventId") Long eventId
     ) {
-        return Response.ok(pricelistRepository.getPricelistForEvent(event)).build();
+        Object pricelist = pricelistRepository.getPricelistForEvent(eventId);
+
+        return Response.ok(pricelist).build();
     }
 
     @POST
@@ -29,9 +33,9 @@ public class PricelistResource {
     public Response createPriceList(
              @QueryParam("productName") String productName,
              @QueryParam("price") int price,
-             @QueryParam("eventName") String eventName
+             @QueryParam("eventId") Long eventId
     ) {
-        return Response.ok(pricelistRepository.createPricelist(productName, price, eventName)).build();
+        return Response.ok(pricelistRepository.createPricelist(productName, price, eventId)).build();
     }
 
 
@@ -40,14 +44,14 @@ public class PricelistResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createPricelist(
             Map<String, Integer> prices,
-            @QueryParam("eventName") String eventName
+            @QueryParam("eventId") Long eventId
     ) {
 
         for (Map.Entry<String, Integer> entry : prices.entrySet()) {
             String productType = entry.getKey();
             int price = entry.getValue();
             if (price != 0) {
-                pricelistRepository.createPricelist(productType, price, eventName);
+                pricelistRepository.createPricelist(productType, price, eventId);
             }
         }
         return Response.ok().build();

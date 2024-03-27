@@ -19,10 +19,6 @@ export class EventStoreService {
     return this.http.get(`${this.url}?mail=${this.securityService.getUserIdFromToken()}`)
   }
 
-  getVouhcersForEvents() {
-
-  }
-
   createEvent(name: string) {
     console.log('crete evetn usedr: ' + this.securityService.getUserIdFromToken())
 

@@ -45,6 +45,11 @@ public class EventRepository implements PanacheRepository<Event> {
     public Object getEventByName(String name) {
         return find("name", name).firstResult();
     }
+
+    public Event getEventByIdForPricelist(Long id) {
+        return findById(id);
+    }
+
     public Event getEventByNameForPricelist(String name) {
         return find("name", name).firstResult();
     }

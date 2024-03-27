@@ -20,22 +20,23 @@ public class PricelistRepository implements PanacheRepository<Pricelist> {
     ProductRepository productRepository;
     @Inject
     EventRepository eventRepository;
-    public Object getPricelistForEvent(String event) {
-        Query query = entityManager.createQuery("select p.name, pl.price " +
-                "from Product p " +
-                "join Pricelist pl on p.id = pl.id " +
-                "where pl.event.name = :eventId");
+    public Object getPricelistForEvent(Long eventId) {
+        Query query = entityManager.createQuery("select pl " +
+                "from Pricelist pl " +
+                "join Product p on p.id = pl.product.id " +
+                "where pl.event.id = :eventId");
 
 
-        query.setParameter("eventId", event);
+        query.setParameter("eventId", eventId);
         return query.getResultList();
     }
-//
-    public Pricelist createPricelist(String productName, int price, String eventName) {
+
+    public Pricelist createPricelist(String productName, int price, Long eventId) {
         var pricelist = new Pricelist();
 
         pricelist.setProduct(productRepository.getProductByNameForPricelist(productName));
-        pricelist.setEvent(eventRepository.getEventByNameForPricelist(eventName));
+        pricelist.setEvent(eventRepository.getEventByIdForPricelist(eventId));
+
         pricelist.setPrice(price);
 
         entityManager.persist(pricelist);

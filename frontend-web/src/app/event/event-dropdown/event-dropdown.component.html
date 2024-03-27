@@ -1,7 +1,11 @@
-<select name="events" id="events" [(ngModel)]="selectedItem" (change)="onSelect()">
-  <option [ngValue]="allEvents">All</option>
+<!--<select name="events" id="events" [(ngModel)]="selectedItem" (change)="onSelect()">-->
+<!--  <option [ngValue]="allEvents">All</option>-->
+<!--  <option *ngFor="let item of items" [ngValue]="item.id">{{ item.name }}</option>-->
+<!--</select>-->
+
+<select class="form-select event-dropdown" name="events" id="events" [(ngModel)]="selectedItem" (change)="onSelect()">
+  <option [ngValue]="allEvents">Alle Events</option>
   <option *ngFor="let item of items" [ngValue]="item.id">{{ item.name }}</option>
 </select>
-
 
 

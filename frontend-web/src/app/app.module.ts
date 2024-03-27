@@ -16,6 +16,7 @@ import { EventCreateComponent } from './event/event-create/event-create.componen
 import { EventDropdownComponent } from './event/event-dropdown/event-dropdown.component';
 import {QrCodeListComponent} from "./qr-codes/qr-code-list/qr-code-list.component";
 import {QrCodeCreatePdfComponent} from "./qr-codes/qr-code-create-pdf/qr-code-create-pdf.component";
+import { PricelistAdminComponent } from './pricelist/pricelist-admin/pricelist-admin.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {QrCodeCreatePdfComponent} from "./qr-codes/qr-code-create-pdf/qr-code-cr
     LoginComponent,
     RegisterComponent,
     EventCreateComponent,
-    EventDropdownComponent
+    EventDropdownComponent,
+    PricelistAdminComponent
   ],
   imports: [
     BrowserModule,
