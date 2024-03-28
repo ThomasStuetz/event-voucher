@@ -17,6 +17,9 @@ export class QrCodeListComponent {
 
   constructor(private service: QrCodeStoreService, private router: Router, private securityService: SecurityService) {
 
+    this.router.events.subscribe(event => {
+      this.service.fetchInitialQrCodes();
+    });
 
     this.getAllVouchers()
 
@@ -24,14 +27,11 @@ export class QrCodeListComponent {
   }
 
   getAllVouchers() {
-
-    this.router.events.subscribe(event => {
-      this.service.fetchInitialQrCodes();
-    });
-
-    this.service.getAll().subscribe(qrcodes => {
-      this.qrcodes = qrcodes
-    })
+    this.service.getAll()
+      .subscribe(qrcodes => {
+        this.qrcodes = qrcodes
+      },
+        error => console.log('error getting pricelist'))
   }
 
   getVouchersFromEvent(id: number) {
@@ -39,8 +39,8 @@ export class QrCodeListComponent {
   }
 
   onDropdownSelectionChange(value: any) {
-    this.selectedValue = value;
-    if (this.selectedValue == "all") {
+    this.selectedValue = value
+    if (this.selectedValue == 'all') {
       this.getAllVouchers()
     } else {
       this.getVouchersFromEvent(this.selectedValue)

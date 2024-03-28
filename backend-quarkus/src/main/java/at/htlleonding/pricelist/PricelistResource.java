@@ -19,8 +19,16 @@ public class PricelistResource {
     PricelistRepository pricelistRepository;
 
     @GET
+    @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPricelist(
+    public Response getPricelist() {
+        System.out.println("hello world fomr pricelist all");
+        return Response.ok(pricelistRepository.listAll()).build();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getPricelistForEvent(
             @QueryParam("eventId") Long eventId
     ) {
         Object pricelist = pricelistRepository.getPricelistForEvent(eventId);
@@ -31,9 +39,9 @@ public class PricelistResource {
     @POST
     @Transactional
     public Response createPriceList(
-             @QueryParam("productName") String productName,
-             @QueryParam("price") int price,
-             @QueryParam("eventId") Long eventId
+            @QueryParam("productName") String productName,
+            @QueryParam("price") int price,
+            @QueryParam("eventId") Long eventId
     ) {
         return Response.ok(pricelistRepository.createPricelist(productName, price, eventId)).build();
     }
@@ -46,7 +54,6 @@ public class PricelistResource {
             Map<String, Integer> prices,
             @QueryParam("eventId") Long eventId
     ) {
-
         for (Map.Entry<String, Integer> entry : prices.entrySet()) {
             String productType = entry.getKey();
             int price = entry.getValue();
@@ -56,30 +63,4 @@ public class PricelistResource {
         }
         return Response.ok().build();
     }
-
-
-//    @POST
-//    @Transactional
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public Response createPricelist(InputStream input) {
-//
-//
-//
-//        try (JsonReader jsonReader = Json.createReader(input)) {
-//            JsonObject pricesJson = jsonReader.readObject();
-//
-//            for (Map.Entry<String, JsonValue> entry : pricesJson.entrySet()) {
-//                String productType = entry.getKey();
-//                int price = ((JsonNumber) entry.getValue()).intValue();
-//                if (price != 0) {
-//                    pricelistRepository.createPricelist(productType, price);
-//                }
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return Response.status(Response.Status.BAD_REQUEST).entity("Invalid JSON format").build();
-//        }
-//
-//        return Response.ok().build();
-//    }
 }
