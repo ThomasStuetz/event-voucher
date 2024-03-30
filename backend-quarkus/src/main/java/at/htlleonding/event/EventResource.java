@@ -1,7 +1,7 @@
 package at.htlleonding.event;
 
-import at.htlleonding.voucher.user.User;
-import at.htlleonding.voucher.user.UserRepository;
+import at.htlleonding.pricelist.PricelistRepository;
+import at.htlleonding.voucher.control.VoucherRepository;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
@@ -14,6 +14,10 @@ public class EventResource {
 
     @Inject
     EventRepository eventRepository;
+    @Inject
+    VoucherRepository voucherRepository;
+    @Inject
+    PricelistRepository pricelistRepository;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -49,4 +53,23 @@ public class EventResource {
         return Response.ok(eventRepository.findById(id).getName()).build();
     }
 
+    @GET
+    @Transactional
+    @Path("/remove")
+    public Response removeEvent(
+            @QueryParam("eventId") Long eventId
+    ) {
+        Event event = eventRepository.findById(eventId);
+        if (!pricelistRepository.findAll().list().isEmpty()) {
+            pricelistRepository.delete("event", event);
+            System.out.println("!lskdjfsdlkfjsdlkfjsdklf");
+        }
+        if (!voucherRepository.findAll().list().isEmpty()) {
+            voucherRepository.delete("eventId", event);
+        }
+
+        eventRepository.delete("id", eventId);
+
+        return Response.ok(eventRepository.findById(eventId).getName()).build();
+    }
 }

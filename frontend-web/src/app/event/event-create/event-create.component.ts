@@ -58,7 +58,13 @@ export class EventCreateComponent {
   }
 
   removeEventFunc() {
-    console.log("remove event")
+    this.eventSvc.removeEvent(this.selectedValue)
+      .subscribe(
+      response => console.log('Successful!', response),
+      error => console.log('Error!', error)
+    )
+    this.closeModalRemove()
+    this.showToastRemove()
   }
 
   openModalRemove() {
@@ -78,6 +84,11 @@ export class EventCreateComponent {
 
   showToast(): void {
     const liveToast = document.getElementById('liveToast');
+    var toast = new bootstrap.Toast(liveToast);
+    toast.show();
+  }
+  showToastRemove(): void {
+    const liveToast = document.getElementById('liveToastRemove');
     var toast = new bootstrap.Toast(liveToast);
     toast.show();
   }

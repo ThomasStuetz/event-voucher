@@ -33,4 +33,7 @@ export class EventStoreService {
     return this.http.get(`${this.url}/eventName?id=${id}`, { responseType: 'text' })
   }
 
+  removeEvent(id: number) {
+    return this.http.get(`${this.url}/remove?eventId=${id}`, {responseType: 'text'})
+  }
 }
