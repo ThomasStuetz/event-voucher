@@ -60,13 +60,18 @@ Content-Type: application/json
 
 ### create pricelist items
 
-POST http://localhost:8080/api/pricelist?eventId=7
+POST http://localhost:8080/api/pricelist?eventId=14
 Content-Type: application/json
 
 {
   "alkohol frei": 4,
   "alkoholisch": 3
 }
+
+### remove a pricelist from an event
+
+GET http://localhost:8080/api/pricelist/remove?eventId=14
+Content-Type: application/json
 
 ###
 

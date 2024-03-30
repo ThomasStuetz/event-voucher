@@ -1,15 +1,13 @@
 package at.htlleonding.pricelist;
 
+import at.htlleonding.event.Event;
+import at.htlleonding.event.EventRepository;
 import jakarta.inject.Inject;
-import jakarta.json.*;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import javax.management.Query;
-import java.io.InputStream;
 import java.util.Map;
 
 @Path("/api/pricelist")
@@ -17,6 +15,8 @@ public class PricelistResource {
 
     @Inject
     PricelistRepository pricelistRepository;
+    @Inject
+    EventRepository eventRepository;
 
     @GET
     @Path("/all")
@@ -62,5 +62,15 @@ public class PricelistResource {
             }
         }
         return Response.ok().build();
+    }
+
+    @GET
+    @Transactional
+    @Path("/remove")
+    public Response removePricelistForEvent(
+            @QueryParam("eventId") Long eventId
+    ) {
+        Event event = eventRepository.findById(eventId);
+        return Response.ok(pricelistRepository.delete("event", event)).build();
     }
 }

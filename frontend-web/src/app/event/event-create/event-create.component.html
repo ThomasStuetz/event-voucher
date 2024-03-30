@@ -1,16 +1,84 @@
-<span class="input-group-text"> name des events</span>
-<input type="text" class="form-control" [(ngModel)]="name" aria-label="Sizing example input"
-       aria-describedby="inputGroup-sizing-default">
-<div class="d-flex justify-content-center create-qr-btn">
-  <button type="button" class="btn btn-primary  align-content-center" id="liveToastBtn"
-          (click)="createEvent(name)">Event erstellen
-  </button>
+<h1 class="text-center mb-5 m-4">Verwalten der Events</h1>
+<hr>
+<div class="control-container">
+  <div class="btn-group">
+    <button type="button" class="btn btn-danger" (click)="openModalRemove()" >Event löschen</button>
+    <button type="button" class="btn btn-primary" (click)="openModal()">Event erstellen</button>
+  </div>
+</div>
+
+<table class="table table-hover border-1 text-center">
+  <thead class="bg-danger">
+  <tr class="bg-danger">
+    <th scope="col">Event Name</th>
+    <th scope="col">Schlüssel</th>
+  </tr>
+  </thead>
+
+  <tbody *ngFor="let event of events">
+  <tr *ngIf="event">
+    <td class="align-middle">{{ event.name }}</td>
+    <td class="align-middle">{{ event.key }}</td>
+  </tr>
+  </tbody>
+</table>
+
+<!--erstellen von events-->
+
+<div class="modal fade" #createEvent tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createModalLabel">Event erstellen</h5>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+             aria-label="Close" (click)="closeModal()"
+             class="bi bi-x-lg close" viewBox="0 0 16 16">
+          <path
+            d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+        </svg>
+      </div>
+      <div class="modal-body">
+        <p class="text-center">Geben Sie einen Event Namen ein:</p>
+        <input type="text" class="form-control" [(ngModel)]="name" aria-label="Sizing example input"
+               aria-describedby="inputGroup-sizing-default">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Schließen</button>
+        <button type="button" class="btn btn-primary" (click)="createEventFunc(name)">Erstellen</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" #removePricelist tabindex="-1" role="dialog" aria-labelledby="removeModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="removeModalLabel">Event löschen</h5>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+             aria-label="Close" (click)="closeModalRemove()"
+             class="bi bi-x-lg close" viewBox="0 0 16 16">
+          <path
+            d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+        </svg>
+      </div>
+      <div class="modal-body align-content-center d-flex flex-column justify-content-center align-items-center">
+        <p class="text-center mb-4">Wählen Sie das Event aus, das Sie löschen möchten.</p>
+        <mvf-event-dropdown class="event-dropdown" (selectionChange)="onDropdownSelectionChange($event)"></mvf-event-dropdown>
+        <p class="text-center text-danger mt-4">Achtung: Es werden auch Preislisten und QR-Codes des Events gelöscht.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModalRemove()">Schließen</button>
+        <button type="button" class="btn btn-primary" (click)="removeEventFunc()">Löschen</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 
-<mvf-event-dropdown></mvf-event-dropdown>
-
-
+<!--toast-->
 <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
   <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-header">

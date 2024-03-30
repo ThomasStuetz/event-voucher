@@ -9,9 +9,12 @@ import {Pricelist} from "../../shared/pricelist";
 })
 export class PricelistAdminComponent {
 
+  @ViewChild('createPricelist') modalElement: ElementRef | undefined;
+  @ViewChild('removePricelist') removeModalElement: ElementRef | undefined;
   pricelists: Pricelist[] = []
   selectedValue: any
   selectedValueForEvent: any
+  selectedValueForRemove: any
 
   constructor(private service: PricelistStoreService) {
     this.getAllPricelists()
@@ -59,7 +62,7 @@ export class PricelistAdminComponent {
     {label: 'sonstiges', checked: false, price: 0}
   ]
 
-  createPricelist() {
+  createPricelistFunc() {
     const selectedItems = this.items.filter(item => item.checked);
     const pricelist = selectedItems.map(item => ({
       label: item.label,
@@ -72,8 +75,6 @@ export class PricelistAdminComponent {
       )
     this.closeModal()
   }
-
-  @ViewChild('exampleModal') modalElement: ElementRef | undefined;
 
   openModal() {
     if (this.modalElement) {
@@ -92,4 +93,35 @@ export class PricelistAdminComponent {
   }
 
   protected readonly close = close;
+
+  //delete pricelist
+
+  onDropdownSelectionChangeForRemove(value: any) {
+    this.selectedValueForRemove = value
+  }
+
+  removePricelistFunc() {
+    this.service.removePricelist(this.selectedValueForRemove)
+      .subscribe(
+      response => console.log('Successful!', response),
+      error => console.log('Error!', error)
+    )
+    this.closeModalRemove()
+  }
+
+  openModalRemove() {
+    if (this.removeModalElement) {
+      this.removeModalElement.nativeElement.classList.add('show');
+      this.removeModalElement.nativeElement.style.display = 'block';
+      document.body.classList.add('modal-open');
+    }
+  }
+  closeModalRemove() {
+    if (this.removeModalElement) {
+      this.removeModalElement.nativeElement.classList.remove('show');
+      this.removeModalElement.nativeElement.style.display = 'none';
+      document.body.classList.remove('modal-open');
+    }
+  }
+
 }

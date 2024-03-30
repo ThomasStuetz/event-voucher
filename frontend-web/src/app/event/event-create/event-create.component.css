@@ -1,0 +1,26 @@
+.control-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* Change from 'space-between' to 'flex-end' */
+  width: 100%;
+}
+
+.control-container .btn-group {
+  display: flex;
+  align-items: center;
+}
+
+.control-container .btn-group button {
+  margin-left: 10px; /* Adjust as needed */
+}
+.modal-body.align-content-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-body.align-content-center .text-center {
+  /* Optional: You can override Bootstrap's default center alignment */
+  text-align: center;
+}

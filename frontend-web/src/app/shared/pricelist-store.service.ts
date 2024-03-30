@@ -36,7 +36,9 @@ export class PricelistStoreService {
     console.log("formated pricelist ", pricelistObject)
 
     return this.http.post(`${this.url}?eventId=${eventId}`, pricelistObject)
+  }
 
-
+  removePricelist(eventId: number) {
+    return this.http.get(`${this.url}/remove?eventId=${eventId}`)
   }
 }
