@@ -2,6 +2,8 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {PricelistStoreService} from "../../shared/pricelist-store.service";
 import {Pricelist} from "../../shared/pricelist";
 
+declare var bootstrap: any
+
 @Component({
   selector: 'mvf-pricelist-admin',
   templateUrl: './pricelist-admin.component.html',
@@ -15,6 +17,7 @@ export class PricelistAdminComponent {
   selectedValue: any
   selectedValueForEvent: any
   selectedValueForRemove: any
+  count: string = ""
 
   constructor(private service: PricelistStoreService) {
     this.getAllPricelists()
@@ -74,6 +77,7 @@ export class PricelistAdminComponent {
         error => console.log('Error!', error)
       )
     this.closeModal()
+    this.showToast()
   }
 
   openModal() {
@@ -103,10 +107,11 @@ export class PricelistAdminComponent {
   removePricelistFunc() {
     this.service.removePricelist(this.selectedValueForRemove)
       .subscribe(
-      response => console.log('Successful!', response),
+      response => this.count = response.toString(), //console.log('Successful!', response),
       error => console.log('Error!', error)
     )
     this.closeModalRemove()
+    this.showToastRemove()
   }
 
   openModalRemove() {
@@ -124,4 +129,15 @@ export class PricelistAdminComponent {
     }
   }
 
+
+  showToast(): void {
+    const liveToast = document.getElementById('liveToast');
+    var toast = new bootstrap.Toast(liveToast);
+    toast.show();
+  }
+  showToastRemove(): void {
+    const liveToast = document.getElementById('liveToastRemove');
+    var toast = new bootstrap.Toast(liveToast);
+    toast.show();
+  }
 }

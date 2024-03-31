@@ -1,8 +1,13 @@
 <h1 class="text-center mb-5 m-4">Liste aller QR Codes</h1>
 <hr>
+<div class="control-container">
+  <mvf-event-dropdown (selectionChange)="onDropdownSelectionChange($event)"></mvf-event-dropdown>
+  <div class="btn-group">
+    <button type="button" class="btn btn-danger"> <!-- (click)="openModalRemove()" -->QR-Codes löschen</button>
+    <button type="button" class="btn btn-primary" ><!--(click)="openModal()"-->QR-Codes erstellen</button>
+  </div>
+</div>
 
-
-<mvf-event-dropdown (selectionChange)="onDropdownSelectionChange($event)"></mvf-event-dropdown>
 
 <table class="table table-hover border-1 text-center">
   <thead class="bg-danger">

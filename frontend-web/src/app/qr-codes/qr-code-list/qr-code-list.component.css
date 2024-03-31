@@ -1,4 +1,25 @@
+.control-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.control-container .btn-group {
+  display: flex;
+  align-items: center;
+}
+
+.control-container mvf-event-dropdown {
+  flex: 1; /* Allow the dropdown to grow to fill available space */
+  margin-right: 10px; /* Adjust as needed */
+}
+
+.control-container .btn-group button {
+  margin-left: 10px; /* Adjust as needed */
+}
 .image {
   height: 5rem;
 }
+
 
