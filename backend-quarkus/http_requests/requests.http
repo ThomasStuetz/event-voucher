@@ -20,7 +20,7 @@ Accept: application/json
 
 ###
 
-POST http://localhost:8080/api/qrcodes?value=3&no=15&event=1
+POST http://localhost:8080/api/qrcodes?value=3&no=15&event=26
 Accept: text/plain
 
 ### get all qr codes
@@ -45,7 +45,7 @@ Content-Type: application/json
 
 ### create a event
 
-POST http://localhost:8080/api/events?name=tdot&mail=app@mail.com
+POST http://localhost:8080/api/events?name=testtest&mail=app@mail.com
 Content-Type: application/json
 
 ### get pricelist for event id
@@ -55,7 +55,7 @@ Content-Type: application/json
 
 ### get all pricelists
 
-GET http://localhost:8080/api/pricelist/all
+GET http://localhost:8080/api/pricelist/all?mail=sebi@mail.com
 Content-Type: application/json
 
 ### create pricelist items

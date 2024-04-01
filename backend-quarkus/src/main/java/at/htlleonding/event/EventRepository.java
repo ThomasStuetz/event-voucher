@@ -37,7 +37,7 @@ public class EventRepository implements PanacheRepository<Event> {
         User user = userRepository.findByEmail(mail);
         var event = new Event(name);
         event.setUserId(user);
-        event.setKey(random.nextInt(1000));
+        event.setKey(random.nextInt(900) + 100);
         persist(event);
         return event;
     }

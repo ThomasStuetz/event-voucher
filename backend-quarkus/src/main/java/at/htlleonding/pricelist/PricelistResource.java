@@ -21,9 +21,13 @@ public class PricelistResource {
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPricelist() {
+    public Response getPricelist(
+            @QueryParam("mail") String mail
+    ) {
         System.out.println("hello world fomr pricelist all");
-        return Response.ok(pricelistRepository.listAll()).build();
+
+        return Response.ok(pricelistRepository.getAllFromUser(mail)).build();
+//        return Response.ok(pricelistRepository.listAll()).build();
     }
 
     @GET

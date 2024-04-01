@@ -42,4 +42,11 @@ public class PricelistRepository implements PanacheRepository<Pricelist> {
         entityManager.persist(pricelist);
         return pricelist;
     }
+
+    public Object getAllFromUser(String mail) {
+        Query query = entityManager.createQuery("SELECT p FROM Pricelist p WHERE p.event.userId.email = :mail");
+        query.setParameter("mail", mail);
+
+        return query.getResultList();
+    }
 }
