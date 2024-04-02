@@ -96,4 +96,8 @@ export class QrCodeStoreService {
     }
     return this.qrCodeSubject.asObservable()
   }
+
+  removeQrCode(eventId: number) {
+    return this.http.get(`${this.apiUrl}/qrcodes/delete?eventId=${eventId}`)
+  }
 }

@@ -11,7 +11,7 @@ declare var bootstrap: any
 })
 export class PricelistAdminComponent {
 
-  @ViewChild('createPricelist') modalElement: ElementRef | undefined;
+  @ViewChild('createPricelist') modalElement: ElementRef | undefined
   @ViewChild('removePricelist') removeModalElement: ElementRef | undefined;
   pricelists: Pricelist[] = []
   selectedValue: any

@@ -10,7 +10,7 @@ Accept: application/json
 
 ###
 
-GET http://localhost:8080/api/qrcodes/b650faf0-ad6f-44a3-8684-5aea6899b794?amount=5
+GET http://localhost:8080/api/qrcodes/ce7ec26b-fedd-4ec1-a7ba-a1f603897fba?amount=2
 Accept: application/json
 
 ###
@@ -19,6 +19,10 @@ GET http://localhost:8080/api/qrcodes/getAmount/9ce62944-ed10-4d61-b781-598dfdb7
 Accept: application/json
 
 ###
+
+GET http://localhost:8080/api/qrcodes/delete?eventId=9
+
+### create qr codes
 
 POST http://localhost:8080/api/qrcodes?value=3&no=15&event=26
 Accept: text/plain

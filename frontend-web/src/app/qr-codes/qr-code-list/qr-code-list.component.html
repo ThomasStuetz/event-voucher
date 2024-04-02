@@ -1,10 +1,10 @@
-<h1 class="text-center mb-5 m-4">Liste aller QR Codes</h1>
+<h1 class="text-center mb-5 m-4">QR-Codes verwalten</h1>
 <hr>
 <div class="control-container">
   <mvf-event-dropdown (selectionChange)="onDropdownSelectionChange($event)"></mvf-event-dropdown>
   <div class="btn-group">
-    <button type="button" class="btn btn-danger"> <!-- (click)="openModalRemove()" -->QR-Codes löschen</button>
-    <button type="button" class="btn btn-primary" ><!--(click)="openModal()"-->QR-Codes erstellen</button>
+    <button type="button" class="btn btn-danger" (click)="openModalRemove()">QR-Codes löschen</button>
+    <button type="button" class="btn btn-primary" (click)="openModal()">QR-Codes erstellen</button>
   </div>
 </div>
 
@@ -22,7 +22,7 @@
   </thead>
 
   <tbody *ngFor="let qrcode of qrcodes">
-  <tr *ngIf="qrcode" >
+  <tr *ngIf="qrcode">
     <td class="align-middle" *ngIf="qrcode.valid; else elseBlock">
       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="green"
            class="bi bi-check" viewBox="0 0 16 16">
@@ -52,4 +52,72 @@
 </table>
 
 
+<!--create qr-codes-->
 
+<div class="modal fade" #createQrCode tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createModalLabel">QR-Code erstellen</h5>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+             aria-label="Close" (click)="closeModal()"
+             class="bi bi-x-lg close" viewBox="0 0 16 16">
+          <path
+            d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+        </svg>
+      </div>
+      <div class="modal-body">
+        <div class="input-group mb-3 w-50 input-field" id="upper-input">
+          <span class="input-group-text"> Wert des QR-Codes</span>
+          <input type="number" class="form-control" [(ngModel)]="value" aria-label="Sizing example input"
+                 aria-describedby="inputGroup-sizing-default">
+        </div>
+        <div class="input-group mb-3 w-50 input-field">
+          <span class="input-group-text">Anzahl der QR-Codes</span>
+          <input type="number" class="form-control" [(ngModel)]="count" aria-label="Sizing example input"
+                 aria-describedby="inputGroup-sizing-default">
+        </div>
+        <mvf-event-dropdown class="event-dropdown"
+                            (selectionChange)="onDropdownSelectionChangeForCreate($event)"></mvf-event-dropdown>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Schließen</button>
+          <button type="button" class="btn btn-primary"
+                  (click)="createQrCodeFunc(value !== undefined ? value : 0, count !== undefined ? count : 0, selectedValueForEvent)">
+            Erstellen
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" #removeQrCode tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="removeModalLabel">QR-Code löschen</h5>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+             aria-label="Close" (click)="closeModalRemove()"
+             class="bi bi-x-lg close" viewBox="0 0 16 16">
+          <path
+            d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+        </svg>
+      </div>
+      <div class="modal-body">
+        <mvf-event-dropdown class="event-dropdown"
+                            (selectionChange)="onDropdownSelectionChangeForRemove($event)"></mvf-event-dropdown>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModalRemove()">Schließen</button>
+          <button type="button" class="btn btn-primary"
+                  (click)="removeQrCodeFunc()">
+            Löschen
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

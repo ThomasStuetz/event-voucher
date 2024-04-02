@@ -1,5 +1,7 @@
 package at.htlleonding.voucher.boundary;
 
+import at.htlleonding.event.Event;
+import at.htlleonding.event.EventRepository;
 import at.htlleonding.voucher.control.VoucherRepository;
 import at.htlleonding.voucher.entity.Voucher;
 import at.htlleonding.voucher.entity.dto.VoucherDto;
@@ -23,6 +25,8 @@ public class VoucherResource {
 
     @Inject
     VoucherRepository voucherRepository;
+    @Inject
+    EventRepository eventRepository;
 
     @GET
     @Path("{id}")
@@ -96,5 +100,15 @@ public class VoucherResource {
     ) {
         System.out.println(eventId);
         return Response.ok(voucherRepository.getVouchersFromEvent(eventId)).build();
+    }
+
+    @GET
+    @Path("/delete")
+    @Transactional
+    public Response removeVoucherForEvent(
+            @QueryParam("eventId") Long eventId
+    ) {
+        Event event = eventRepository.findById(eventId);
+        return Response.ok(voucherRepository.delete("eventId", event)).build();
     }
 }
