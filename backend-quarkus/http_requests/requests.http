@@ -93,3 +93,8 @@ GET http://localhost:8080/api/events/eventName?id=14
 
 GET http://localhost:8080/api/events/remove?eventId=21
 
+### login for event
+
+GET http://localhost:8080/api/events/eventLogin?name=test&key=949
+Content-Type: */*
+

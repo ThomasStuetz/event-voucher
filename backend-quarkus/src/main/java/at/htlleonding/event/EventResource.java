@@ -2,6 +2,9 @@ package at.htlleonding.event;
 
 import at.htlleonding.pricelist.PricelistRepository;
 import at.htlleonding.voucher.control.VoucherRepository;
+import at.htlleonding.voucher.security.Token;
+import at.htlleonding.voucher.security.TokenService;
+import at.htlleonding.voucher.user.User;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
@@ -18,6 +21,8 @@ public class EventResource {
     VoucherRepository voucherRepository;
     @Inject
     PricelistRepository pricelistRepository;
+    @Inject
+    TokenService tokenService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -71,5 +76,22 @@ public class EventResource {
         eventRepository.delete("id", eventId);
 
         return Response.ok(eventRepository.findById(eventId).getName()).build();
+    }
+
+    @GET
+    @Path("/eventLogin")
+    public Response eventLogin(
+            @QueryParam("eventName") String name,
+            @QueryParam("key") String key
+    ) {
+        Event exsistingEvent = eventRepository.find("name", name).firstResult();
+
+        System.out.println(exsistingEvent);
+        if (exsistingEvent == null) {
+            throw new WebApplicationException(Response.status(404).entity("No user found or password is incorrect").build());
+        }
+        String token = tokenService.generateToken(exsistingEvent.getName(), key);
+
+        return Response.ok(new Token(tokenService.generateServiceToken(exsistingEvent.getName(), key))).build();
     }
 }
