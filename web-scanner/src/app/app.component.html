@@ -1,1 +1,12 @@
-<mq-qr-scanner></mq-qr-scanner>
+<nav *ngIf="showHeaderAndFooter()">
+  <mq-navbar></mq-navbar>
+</nav>
+<div class="col-md-9  col-lg-10">
+  <router-outlet></router-outlet>
+</div>
+<footer *ngIf="showHeaderAndFooter()">
+  <mq-logout></mq-logout>
+</footer>
+
+
+<!--class="col-md-3 col-lg-2  bg-light sidebar"-->

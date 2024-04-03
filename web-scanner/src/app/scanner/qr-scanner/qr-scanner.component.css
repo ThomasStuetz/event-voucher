@@ -1,10 +1,25 @@
 .camera {
-  height: 100vh;
+  height: 90vh;
+  margin: auto;
 
 }
-.btn {
-  padding: 0.2rem;
-  margin: 0.2rem;
-  border: lightgrey 1px solid;
+.modal-body {
+  display: grid;
+  grid-auto-columns: auto;
+}
+.options {
+  /*border: orange 2px solid;*/
+  display: flex;
+  justify-content: center;
+}
+.options button {
+  width: 50%;
+}
+.button-box {
+  display: flex;
+  justify-content: space-around;
 
+}
+.buttons {
+  width: 45vw;
 }

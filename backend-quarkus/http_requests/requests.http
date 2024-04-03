@@ -24,7 +24,7 @@ GET http://localhost:8080/api/qrcodes/delete?eventId=9
 
 ### create qr codes
 
-POST http://localhost:8080/api/qrcodes?value=3&no=15&event=26
+POST http://localhost:8080/api/qrcodes?value=10&no=15&event=25
 Accept: text/plain
 
 ### get all qr codes
@@ -64,7 +64,7 @@ Content-Type: application/json
 
 ### create pricelist items
 
-POST http://localhost:8080/api/pricelist?eventId=14
+POST http://localhost:8080/api/pricelist?eventId=25
 Content-Type: application/json
 
 {
@@ -95,6 +95,6 @@ GET http://localhost:8080/api/events/remove?eventId=21
 
 ### login for event
 
-GET http://localhost:8080/api/events/eventLogin?name=test&key=949
-Content-Type: */*
+GET http://localhost:8080/api/events/login?name=tdot&key=227
+Content-Type: application/json
 

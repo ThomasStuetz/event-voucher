@@ -19,6 +19,10 @@ public class TokenService {
         return generateToken(email, username, Roles.USER);
     }
 
+    public String generateEventToken(Long id, int key) {
+        return generateTokenForEvent(id, key);
+    }
+
     public String generateServiceToken(String serviceId, String serviceName) {
         return generateToken(serviceId,serviceName,Roles.SERVICE);
     }
@@ -35,6 +39,26 @@ public class TokenService {
             jwtClaims.setAudience("using-jwt");
             jwtClaims.setExpirationTimeMinutesInTheFuture(60); // TODO specify how long do you need
 
+
+            String token = TokenUtils.generateTokenString(jwtClaims);
+            LOGGER.info("TOKEN generated: " + token);
+            return token;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public String generateTokenForEvent(Long id, int key) {
+        try {
+            JwtClaims jwtClaims = new JwtClaims();
+            jwtClaims.setIssuer("lab-jwt"); // change to your company
+            jwtClaims.setJwtId(UUID.randomUUID().toString());
+            jwtClaims.setClaim("eventId", id); // Example custom claim for event ID
+            jwtClaims.setClaim("eventKey", key); // Example custom claim for event key
+            jwtClaims.setAudience("using-jwt");
+            jwtClaims.setExpirationTimeMinutesInTheFuture(60); // TODO specify how long do you need
 
             String token = TokenUtils.generateTokenString(jwtClaims);
             LOGGER.info("TOKEN generated: " + token);

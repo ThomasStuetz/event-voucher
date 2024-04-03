@@ -1,0 +1,17 @@
+<h2 class="text-center mt-4 mb-4">{{title}}</h2>
+
+<table class="table table-hover border-1 text-center">
+  <thead class="head">
+  <tr class="bg-light">
+    <th class="cat" scope="col">Kategorie</th>
+    <th scope="col">Preis</th>
+  </tr>
+  </thead>
+  <tbody *ngFor="let pricelist of pricelists">
+  <tr *ngIf="pricelist">
+    <td class="align-middle name">{{ pricelist.product.name }}</td>
+    <td class="align-middle bg-light">{{ pricelist.price }}€</td>
+  </tr>
+  </tbody>
+
+</table>

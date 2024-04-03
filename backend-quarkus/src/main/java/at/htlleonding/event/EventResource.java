@@ -79,19 +79,20 @@ public class EventResource {
     }
 
     @GET
-    @Path("/eventLogin")
+    @Path("/login")
     public Response eventLogin(
-            @QueryParam("eventName") String name,
-            @QueryParam("key") String key
+            @QueryParam("name") String name,
+            @QueryParam("key") int key
     ) {
         Event exsistingEvent = eventRepository.find("name", name).firstResult();
+        System.out.println(exsistingEvent.getName());
 
         System.out.println(exsistingEvent);
-        if (exsistingEvent == null) {
-            throw new WebApplicationException(Response.status(404).entity("No user found or password is incorrect").build());
-        }
-        String token = tokenService.generateToken(exsistingEvent.getName(), key);
+//        if (exsistingEvent == null) {
+//            throw new WebApplicationException(Response.status(404).entity("No user found or password is incorrect").build());
+//        }
+//        String token = tokenService.generateToken(exsistingEvent.getName(), key);
 
-        return Response.ok(new Token(tokenService.generateServiceToken(exsistingEvent.getName(), key))).build();
+        return Response.ok(new Token(tokenService.generateEventToken(exsistingEvent.getId(), key))).build();
     }
 }

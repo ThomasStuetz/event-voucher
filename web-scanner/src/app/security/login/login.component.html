@@ -1,0 +1,23 @@
+<div class="outer">
+<main class="form-signin text-center sdfsdf">
+  <form>
+    <h1 class="h3 mb-3 fw-normal">Einloggen bei Event</h1>
+
+    <div class="form-floating">
+      <input type="text" class="form-control" id="floatingInput" placeholder="tdot" [(ngModel)]="login"
+             [ngModelOptions]="{standalone: true}">
+      <label for="floatingInput">Event Name</label>
+    </div>
+    <div class="form-floating">
+      <input type="text" class="form-control" id="floatingPassword" placeholder="272" [(ngModel)]="key"
+             [ngModelOptions]="{standalone: true}">
+      <label for="floatingPassword">Key</label>
+    </div>
+
+    <button routerLink="/pricelist" (click)="loginUser(login, key)" class="btn btn-primary w-100 py-2 mt-3" type="submit">Sign
+      in
+    </button>
+
+  </form>
+</main>
+</div>
