@@ -26,11 +26,9 @@ export class QrCodeListComponent {
 
     this.router.events.subscribe(event => {
       this.service.fetchInitialQrCodes();
-    });
+    })
 
     this.getAllVouchers()
-
-
   }
 
   getAllVouchers() {
@@ -46,7 +44,7 @@ export class QrCodeListComponent {
   }
 
   onDropdownSelectionChange(value: any) {
-    this.onDropdownSelectionChange = value
+    this.selectedValue = value
     if (this.selectedValue == 'all') {
       this.getAllVouchers()
     } else {

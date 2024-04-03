@@ -59,7 +59,7 @@ Content-Type: application/json
 
 ### get all pricelists
 
-GET http://localhost:8080/api/pricelist/all?mail=sebi@mail.com
+GET http://localhost:8080/api/pricelist/all?mail=app@mail.com
 Content-Type: application/json
 
 ### create pricelist items

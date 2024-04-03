@@ -19,7 +19,7 @@ export class PricelistStoreService {
   }
 
   getPricelists() {
-    return this.http.get<Pricelist[]>(`${this.url}/all?mail=${this.securityService}`)
+    return this.http.get<Pricelist[]>(`${this.url}/all?mail=${this.securityService.getUserIdFromToken()}`)
   }
 
   getPricelistForEvent(eventId: number) {
